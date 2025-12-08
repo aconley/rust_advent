@@ -38,6 +38,7 @@ fn part1(inputs: &[String]) -> i32 {
     count
 }
 
+// This does not give the correct answer.
 fn part2(inputs: &[String]) -> i32 {
     let mut position = 50;
     let mut count = 0;

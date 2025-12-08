@@ -29,9 +29,32 @@ fn part1(inputs: &[String]) -> i32 {
     count
 }
 
-fn part2(_inputs: &[String]) -> i32 {
-    // TODO: implement part 2
-    0
+fn part2(inputs: &[String]) -> i32 {
+    let mut position = 50;
+    let mut count = 0;
+
+    for line in inputs {
+        let direction = &line[0..1];
+        let distance: i32 = line[1..].parse().unwrap();
+
+        if direction == "L" {
+            // Count zeros during left rotation
+            // Formula depends on whether we start at 0 or not
+            if position == 0 {
+                count += distance / 100;
+            } else if distance >= position {
+                count += 1 + (distance - position) / 100;
+            }
+            position = (position - distance).rem_euclid(100);
+        } else {
+            // Count zeros during right rotation
+            // Number of times we pass through 0 = floor((start + dist) / 100)
+            count += (position + distance) / 100;
+            position = (position + distance).rem_euclid(100);
+        }
+    }
+
+    count
 }
 
 #[cfg(test)]
@@ -75,5 +98,47 @@ mod tests {
             "L100".to_string(), // 0 -> 0 (count = 3)
         ];
         assert_eq!(part1(&input), 3);
+    }
+
+    #[test]
+    fn test_part2_example() {
+        let input = vec![
+            "L68".to_string(),
+            "L30".to_string(),
+            "R48".to_string(),
+            "L5".to_string(),
+            "R60".to_string(),
+            "L55".to_string(),
+            "L1".to_string(),
+            "L99".to_string(),
+            "R14".to_string(),
+            "L82".to_string(),
+        ];
+        // Expected: 3 at end of rotations + 3 during rotations = 6
+        assert_eq!(part2(&input), 6);
+    }
+
+    #[test]
+    fn test_part2_multiple_wraps() {
+        // Test R1000 from position 50 - should pass through 0 ten times
+        let input = vec!["R1000".to_string()];
+        assert_eq!(part2(&input), 10);
+    }
+
+    #[test]
+    fn test_part2_left_from_zero() {
+        // Test rotating left from position 0
+        let input = vec![
+            "L50".to_string(), // 50 -> 0 (1 zero)
+            "L100".to_string(), // 0 -> 0 via full rotation (1 zero)
+        ];
+        assert_eq!(part2(&input), 2);
+    }
+
+    #[test]
+    fn test_part2_no_intermediate_zeros() {
+        // Test rotation that doesn't pass through 0
+        let input = vec!["R10".to_string()]; // 50 -> 60, no zeros
+        assert_eq!(part2(&input), 0);
     }
 }

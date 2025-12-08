@@ -1,0 +1,11 @@
+Cursor:
+  * Solved part1 with no problems, and added tests nicely.
+  * Struggled really hard with part2.
+     * It produced a massive comment in the file describing it's thinking,
+       then came up with a very slow 'one click at a time' solution.
+     * When asked to improve, it did something complicated, then came
+       up with an incorrect solution.
+
+Claude:
+  * Solved both parts of the problem the first time cleanly.  Cost: 50 cents.
+  * It used rem_euclid, which worked a lot better than what Cursor was doing.
