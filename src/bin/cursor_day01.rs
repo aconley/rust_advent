@@ -2,6 +2,7 @@
 fn main() -> std::io::Result<()> {
     let inputs: Vec<String> = rust_advent::read_file_as_lines("01")?;
     println!("Part 1: {}", part1(&inputs));
+    println!("Part 2: {}", part2(&inputs));
     Ok(())
 }
 
@@ -31,6 +32,56 @@ fn part1(inputs: &[String]) -> i32 {
         // Count if the dial is pointing at 0
         if position == 0 {
             count += 1;
+        }
+    }
+    
+    count
+}
+
+fn part2(inputs: &[String]) -> i32 {
+    let mut position = 50;
+    let mut count = 0;
+    
+    for rotation in inputs {
+        // Parse the rotation string (e.g., "L68" or "R48")
+        let direction = rotation.chars().next().unwrap();
+        let distance: i32 = rotation[1..].parse().unwrap();
+        
+        let start = position;
+        
+        // Apply the rotation and count zeros during the rotation
+        match direction {
+            'L' => {
+                let end = (position - distance + 100) % 100;
+                
+                // Count zeros during rotation (excluding start position to avoid double-counting)
+                let mut zeros_during = 0;
+                for k in 1..=distance {
+                    let pos = (start - k + 100) % 100;
+                    if pos == 0 {
+                        zeros_during += 1;
+                    }
+                }
+                count += zeros_during;
+                
+                position = end;
+            }
+            'R' => {
+                let end = (position + distance) % 100;
+                
+                // Count zeros during rotation (excluding start position to avoid double-counting)
+                let mut zeros_during = 0;
+                for k in 1..=distance {
+                    let pos = (start + k) % 100;
+                    if pos == 0 {
+                        zeros_during += 1;
+                    }
+                }
+                count += zeros_during;
+                
+                position = end;
+            }
+            _ => panic!("Invalid direction: {}", direction),
         }
     }
     
@@ -117,5 +168,98 @@ mod tests {
         let inputs = vec!["R50".to_string(), "L1".to_string()];
         // 50 -> 0 (count 1), 0 -> 99
         assert_eq!(part1(&inputs), 1);
+    }
+
+    // Part 2 tests
+    #[test]
+    fn test_part2_example() {
+        let inputs = vec![
+            "L68".to_string(),
+            "L30".to_string(),
+            "R48".to_string(),
+            "L5".to_string(),
+            "R60".to_string(),
+            "L55".to_string(),
+            "L1".to_string(),
+            "L99".to_string(),
+            "R14".to_string(),
+            "L82".to_string(),
+        ];
+        // Should count zeros during rotations too
+        // L68 from 50: passes through 0 once (at position 0 during rotation)
+        // L30 from 82: no zeros
+        // R48 from 52: ends at 0 (count 1)
+        // L5 from 0: no zeros during
+        // R60 from 95: passes through 0 once (wraps from 99 to 0)
+        // L55 from 55: ends at 0 (count 1)
+        // L1 from 0: no zeros during
+        // L99 from 99: ends at 0 (count 1)
+        // R14 from 0: no zeros during
+        // L82 from 14: passes through 0 once (wraps from 0 to 99)
+        // Total: 3 (during) + 3 (at end) = 6
+        assert_eq!(part2(&inputs), 6);
+    }
+
+    #[test]
+    fn test_part2_r1000_from_50() {
+        // Starting at 50, rotate right 1000
+        // We pass through 0 at: 50 (k=50), 150 (k=150), 250, ..., 950, 1050
+        // But k goes from 0 to 1000, so we pass through 0 at k=50, 150, 250, 350, 450, 550, 650, 750, 850, 950
+        // That's 10 times
+        let inputs = vec!["R1000".to_string()];
+        assert_eq!(part2(&inputs), 10);
+    }
+
+    #[test]
+    fn test_part2_single_rotation_to_zero() {
+        // Starting at 50, rotate right 50
+        // We pass through positions: 50, 51, ..., 99, 0
+        // We pass through 0 once (at the end, k=50)
+        let inputs = vec!["R50".to_string()];
+        assert_eq!(part2(&inputs), 1);
+    }
+
+    #[test]
+    fn test_part2_rotation_from_zero() {
+        // Starting at 50, first rotate to 0, then rotate right 100
+        // First rotation: R50, passes through 0 once (at end, k=50)
+        // Second rotation: R100 from 0, passes through 0 once (at end, k=100)
+        // We don't count the start position (k=0) as it was already counted as the end of the previous rotation
+        let inputs = vec!["R50".to_string(), "R100".to_string()];
+        // R50: 50 -> 0, passes through 0 once (at k=50, end)
+        // R100: 0 -> 0, passes through 0 once (at k=100, end)
+        assert_eq!(part2(&inputs), 2);
+    }
+
+    #[test]
+    fn test_part2_left_rotation_through_zero() {
+        // Starting at 50, rotate left 68
+        // We pass through positions: 50, 49, ..., 1, 0, 99, 98, ..., 82
+        // We pass through 0 once (during the rotation, when wrapping)
+        let inputs = vec!["L68".to_string()];
+        assert_eq!(part2(&inputs), 1);
+    }
+
+    #[test]
+    fn test_part2_multiple_wraps() {
+        // Starting at 50, rotate right 50 to get to 0, then rotate right 250
+        // First: R50 from 50 -> 0, passes through 0 once (at end, k=50)
+        // Second: R250 from 0 -> 50, passes through 0 at k=100 and k=200 (during rotation)
+        // We don't count k=0 (start) as it was already counted as the end of the previous rotation
+        // k=250 gives position 50, not 0
+        let inputs = vec!["R50".to_string(), "R250".to_string()];
+        // R50: 50 -> 0, passes through 0 once (at k=50, end)
+        // R250: 0 -> 50, passes through 0 at k=100 and k=200 (during rotation)
+        // Total: 1 + 2 = 3
+        assert_eq!(part2(&inputs), 3);
+    }
+
+    #[test]
+    fn test_part2_no_zeros() {
+        // Rotate but never pass through 0
+        let inputs = vec!["R1".to_string(), "R1".to_string(), "R1".to_string()];
+        // Start at 50, R1 -> 51, R1 -> 52, R1 -> 53
+        // Never pass through 0
+        assert_eq!(part2(&inputs), 0);
     }
 }
