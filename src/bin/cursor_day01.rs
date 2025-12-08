@@ -54,14 +54,21 @@ fn part2(inputs: &[String]) -> i32 {
             'L' => {
                 let end = (position - distance + 100) % 100;
                 
-                // Count zeros during rotation (excluding start position to avoid double-counting)
-                let mut zeros_during = 0;
-                for k in 1..=distance {
-                    let pos = (start - k + 100) % 100;
-                    if pos == 0 {
-                        zeros_during += 1;
+                // Count zeros during rotation: we pass through 0 when (start - k) % 100 == 0
+                // for k in [1, distance]. This happens at k = start, start+100, start+200, ...
+                // Count how many such k values are in [1, distance]
+                let zeros_during = if start == 0 {
+                    // When starting at 0, we pass through 0 at k=100, 200, ... up to distance
+                    distance / 100
+                } else {
+                    // Count k = start, start+100, start+200, ... that are <= distance
+                    if start <= distance {
+                        1 + ((distance - start) / 100)
+                    } else {
+                        // start > distance: no valid k in range [1, distance] equals start
+                        0
                     }
-                }
+                };
                 count += zeros_during;
                 
                 position = end;
@@ -69,14 +76,14 @@ fn part2(inputs: &[String]) -> i32 {
             'R' => {
                 let end = (position + distance) % 100;
                 
-                // Count zeros during rotation (excluding start position to avoid double-counting)
-                let mut zeros_during = 0;
-                for k in 1..=distance {
-                    let pos = (start + k) % 100;
-                    if pos == 0 {
-                        zeros_during += 1;
-                    }
-                }
+                // Count zeros during rotation using mathematical calculation
+                // We pass through 0 when (start + k) % 100 == 0 for k in [1, distance]
+                // This means start + k = 100*n, so k = 100*n - start
+                // We need: 1 <= 100*n - start <= distance
+                // Rearranging: start + 1 <= 100*n <= start + distance
+                let min_n = (start + 1 + 99) / 100; // ceil((start + 1) / 100)
+                let max_n = (start + distance) / 100; // floor((start + distance) / 100)
+                let zeros_during = (max_n - min_n + 1).max(0);
                 count += zeros_during;
                 
                 position = end;
