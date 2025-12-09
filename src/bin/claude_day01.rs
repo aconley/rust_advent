@@ -159,4 +159,28 @@ mod tests {
         let input = vec!["R10".to_string()]; // 50 -> 60, no zeros
         assert_eq!(part2(&input), 0);
     }
+
+    #[test]
+    fn test_part2_negative_position_affects_counting() {
+        let inputs = vec!["L151".to_string(), "L50".to_string()];
+        assert_eq!(part2(&inputs), 2);
+    }
+
+    #[test]
+    fn test_part2_large_left_rotation() {
+        let inputs = vec!["L200".to_string()];
+        assert_eq!(part2(&inputs), 2);
+    }
+
+    #[test]
+    fn test_part2_another_negative_position_case() {
+        let inputs = vec!["L201".to_string(), "L49".to_string()];
+        assert_eq!(part2(&inputs), 3);
+    }
+
+    #[test]
+    fn test_part2_right_rotation_from_negative() {
+        let inputs = vec!["L251".to_string(), "R100".to_string()];
+        assert_eq!(part2(&inputs), 4);
+    }
 }

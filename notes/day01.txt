@@ -5,7 +5,14 @@ Cursor:
        then came up with a very slow 'one click at a time' solution.
      * When asked to improve, it did something complicated, then came
        up with an incorrect solution.
+     * With added tests (from claude) it did better, but still didn't
+       get the right answer.
+     * When explicitly asked about using `rem_euclid`, cursor produced
+       code that got the answer correct.
 
 Claude:
   * Solved both parts of the problem the first time cleanly.  Cost: 50 cents.
   * It used rem_euclid, which worked a lot better than what Cursor was doing.
+  * I asked claude to add tests to the cursor version that helped
+    with what was wrong, and it did produce some additional tests, but
+    it burned a lot of tokens and had a pretty hard time.
