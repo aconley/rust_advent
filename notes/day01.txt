@@ -16,3 +16,7 @@ Claude:
   * I asked claude to add tests to the cursor version that helped
     with what was wrong, and it did produce some additional tests, but
     it burned a lot of tokens and had a pretty hard time.
+
+Gemini CLI:
+  * Quite similar to Claude, although a slightly different solution
+    combining `dev_euclid` and `rem_euclid`.
