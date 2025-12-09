@@ -6,7 +6,15 @@ fn main() -> std::io::Result<()> {
     Ok(())
 }
 
-
+/// Part 1: Count the number of times the dial is pointing at 0 after a rotation.
+///
+/// The dial goes from 0 to 99, and starts at position 50, with wrapping.
+/// 
+/// Inputs:
+///   input: a vector of strings.  Each string is a rotation of the dial expressed
+///          as a single character direction (L or R) followed by a number of clicks.
+/// Returns:
+///   The number of times the dial is pointing at 0 after a rotation.
 fn part1(inputs: &[String]) -> i32 {
     let mut position = 50;
     let mut count = 0;
@@ -29,6 +37,16 @@ fn part1(inputs: &[String]) -> i32 {
     count
 }
 
+/// Part 2: Count the number of times the dial is pointing at 0 at any point
+/// during a rotation.
+///
+/// The dial goes from 0 to 99, and starts at position 50, with wrapping.
+/// 
+/// Inputs:
+///   input: a vector of strings.  Each string is a rotation of the dial expressed
+///          as a single character direction (L or R) followed by a number of clicks.
+/// Returns:
+///   The number of times the dial is pointing at 0 at any point during a rotation.
 fn part2(inputs: &[String]) -> i32 {
     let mut position = 50;
     let mut count = 0;

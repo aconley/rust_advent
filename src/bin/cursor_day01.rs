@@ -6,7 +6,15 @@ fn main() -> std::io::Result<()> {
     Ok(())
 }
 
-
+/// Part 1: Count the number of times the dial is pointing at 0 after a rotation.
+///
+/// The dial goes from 0 to 99, and starts at position 50, with wrapping.
+/// 
+/// Inputs:
+///   input: a vector of strings.  Each string is a rotation of the dial expressed
+///          as a single character direction (L or R) followed by a number of clicks.
+/// Returns:
+///   The number of times the dial is pointing at 0 after a rotation.
 fn part1(inputs: &[String]) -> i32 {
     let mut position = 50;
     let mut count = 0;
@@ -34,10 +42,19 @@ fn part1(inputs: &[String]) -> i32 {
             count += 1;
         }
     }
-    
     count
 }
 
+/// Part 2: Count the number of times the dial is pointing at 0 at any point
+/// during a rotation.
+///
+/// The dial goes from 0 to 99, and starts at position 50, with wrapping.
+/// 
+/// Inputs:
+///   input: a vector of strings.  Each string is a rotation of the dial expressed
+///          as a single character direction (L or R) followed by a number of clicks.
+/// Returns:
+///   The number of times the dial is pointing at 0 at any point during a rotation.
 // This does not give the correct answer.
 fn part2(inputs: &[String]) -> i32 {
     let mut position = 50;
@@ -270,4 +287,55 @@ mod tests {
         // Never pass through 0
         assert_eq!(part2(&inputs), 0);
     }
+
+    // Tests that expose bugs in cursor_day01 implementation
+    #[test]
+    fn test_part2_negative_position_affects_counting() {
+        // BUG: After L151 from 50, position becomes -1 (should be 99)
+        // Then L50 counting logic is affected by the negative position:
+        // - Buggy (position=-1): checks if -1 <= 50 (True), incorrectly counts extra zeros
+        // - Correct (position=99): checks if 99 <= 50 (False), correctly counts 0 zeros
+        //
+        // L151 from 50: passes through 0 once (at k=50), ends at position 99
+        // L50 from 99: doesn't pass through 0 (99-50=49, which is not 0)
+        // Expected total: 1
+        // Buggy gets: 3 (because it miscounts due to negative position)
+        let inputs = vec!["L151".to_string(), "L50".to_string()];
+        assert_eq!(part2(&inputs), 1);
+    }
+
+    #[test]
+    fn test_part2_large_left_rotation() {
+        // BUG: Left rotation with distance > position + 100 causes negative position
+        // Starting at 50, rotate left 200
+        // Should end at position 50 (wrapped around twice)
+        // Should pass through 0 twice (at k=50 and k=150)
+        let inputs = vec!["L200".to_string()];
+        assert_eq!(part2(&inputs), 2);
+    }
+
+    #[test]
+    fn test_part2_another_negative_position_case() {
+        // BUG: L201 from 50 creates position = -51 (should be 49)
+        // Then L49 should not pass through 0 (from 49, L49 lands on 0 but at the end)
+        // But with position=-51, the counting logic gives wrong result
+        let inputs = vec!["L201".to_string(), "L49".to_string()];
+        // L201 from 50: passes through 0 at k=50 and k=150, ends at 49 (count=2)
+        // L49 from 49: passes through 0 at k=49, ends at 0 (count=1)
+        // Expected total: 3
+        assert_eq!(part2(&inputs), 3);
+    }
+
+    #[test]
+    fn test_part2_right_rotation_from_negative() {
+        // BUG: After position becomes negative, right rotation counting is also affected
+        // L251 from 50 creates position = -101 % 100 = -1 (should be 99)
+        // Then R100: with position=-1, min_n and max_n calculations are wrong
+        let inputs = vec!["L251".to_string(), "R100".to_string()];
+        // L251 from 50: passes through 0 at k=50 and k=150, ends at 99 (count=2)
+        // R100 from 99: passes through 0 at k=1 (when we hit 100%100=0), ends at 99 (count=1)
+        // Expected total: 3
+        assert_eq!(part2(&inputs), 3);
+    }
+
 }
