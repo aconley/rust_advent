@@ -1,7 +1,7 @@
 /// Day 1.
 fn main() -> std::io::Result<()> {
     let inputs: Vec<String> = rust_advent::read_file_as_lines("01")?;
-    println!("Part 1: {}", day01(&inputs));
+    println!("Part 1: {}", part1(&inputs));
     println!("Part 2: {}", part2(&inputs));
     Ok(())
 }
@@ -15,7 +15,7 @@ fn main() -> std::io::Result<()> {
 ///          as a single character direction (L or R) followed by a number of clicks.
 /// Returns:
 ///   The number of times the dial is pointing at 0 after a rotation.
-fn day01(inputs: &[String]) -> usize {
+fn part1(inputs: &[String]) -> usize {
     let mut current_pos: i32 = 50;
     let mut zero_count: usize = 0;
 
