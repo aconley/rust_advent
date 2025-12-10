@@ -1,3 +1,5 @@
+Part 1:
+
 Antigravity:
    * The first attempts failed, but that is because I misunderstood the problem.
      It would have been nice if it had pointed out my examples didn't work under
@@ -15,3 +17,31 @@ Cursor:
      I had specified u32 output and it overflowed.  Once swapped to u64 the
      solution worked.
    * As with Antigravity, the solution was over-monolithic.
+
+Gemini-CLI:
+   * Solved the problem correctly the first time, although this time I
+     started with the correct numeric type.
+   * As was the case for the others, the solution was over-monolithic.
+
+Part 2:
+
+
+Claude:
+   * Solved it the first time.
+   * Was using unwraps until I told it not to.
+   * Solution was essentially working with the digits directly.
+
+Gemini-CLI:
+   * Solved it the first time.
+   * Did use expects.
+   * Took the opportunity to refactor the parsing logic and share it.
+     Would've been better to return an iterator though rather than
+     creating a vector.
+   * Solution was significantly more mathy than Claude's, with GCDs
+     and prime factorization.
+
+Antigravity:
+   * Solved it the first time.
+   * Solution similar to Gemini, but slightly different.  Antigravity
+     seems to like the idea of sum less than, and subtracting to form
+     the range sum.

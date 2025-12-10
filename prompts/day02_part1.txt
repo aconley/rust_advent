@@ -5,9 +5,9 @@ string of comma-separated integer ranges, and returns the sum of all
 endpoints that are 'invalid', where an 'invalid' ID is one that can be
 decomposed into two identical values.  For example:
 
-1111 is invalid, as it can be decomposed into 11 and 11.
-121 is valid, since it cannot be decomposed.
-24452445 is invalid, since it can be decomposed into 2445 and 2445.
+* 1111 is invalid, as it can be decomposed into 11 and 11.
+* 121 is valid, since it cannot be decomposed.
+* 24452445 is invalid, since it can be decomposed into 2445 and 2445.
 
 None of the numbers have leading zeroes; 0101 isn't an ID at all.  101 does not match
 our selection rule.
@@ -37,7 +37,8 @@ Contains the following invalid IDs:
 The rest of the ranges contain no invalid IDs.
 Adding up all the invalid IDs in this example produces 1227775554.
 
-Make sure to add tests.
+Make sure to add tests.  You must *not* examine the contents of other
+rust files in the bin directory.
 
 You should try to make the implementation efficient and try to avoid
 directly iterating over each range if possible.  The code should be
