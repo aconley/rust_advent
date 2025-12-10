@@ -23,6 +23,12 @@ Gemini-CLI:
      started with the correct numeric type.
    * As was the case for the others, the solution was over-monolithic.
 
+Cursor:
+   * Solved the problem correctly the first time.
+   * Ignored my instruction to avoid iterating over the ranges directly -
+     although it was still pretty fast, so maybe that wasn't needed anyways.
+   * Solution was based on converting to strings and checking the substrings.
+
 Part 2:
 
 
@@ -45,3 +51,11 @@ Antigravity:
    * Solution similar to Gemini, but slightly different.  Antigravity
      seems to like the idea of sum less than, and subtracting to form
      the range sum.
+
+Cursor:
+   * Solved the problem correctly the first time.
+   * Ignored my instruction to avoid iterating over the ranges directly -
+     although it was still pretty fast, so maybe that wasn't needed anyways.
+   * Solution was, as in part 1, based on converting to strings and checking
+     the substrings.
+
