@@ -132,7 +132,7 @@ mod tests {
             "R14".to_string(),
             "L82".to_string(),
         ];
-        assert_eq!(day01(&inputs), 3);
+        assert_eq!(part1(&inputs), 3);
     }
 
     #[test]
@@ -142,7 +142,7 @@ mod tests {
             "R99".to_string(), // 0 -> 99
             "R1".to_string(),  // 99 -> 0 (count 2)
         ];
-        assert_eq!(day01(&inputs), 2);
+        assert_eq!(part1(&inputs), 2);
     }
 
     #[test]

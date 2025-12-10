@@ -1,0 +1,17 @@
+Antigravity:
+   * The first attempts failed, but that is because I misunderstood the problem.
+     It would have been nice if it had pointed out my examples didn't work under
+     my specification.
+   * The UI for editing the plan was quite helpful here, easier to follow than
+     a CLI.
+   * After that was fixed, it's solution was correct but gave the wrong answer
+     on the actual input because it used u32 data types which overflowed on input
+     and output.  I had specified the input signature as u32.
+   * The function was over-monolithic, it would've been better factored
+     into a single function that processed a range.
+
+Cursor:
+   * Started with the corrected prompt and solved it correctly, however
+     I had specified u32 output and it overflowed.  Once swapped to u64 the
+     solution worked.
+   * As with Antigravity, the solution was over-monolithic.

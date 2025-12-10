@@ -1,0 +1,45 @@
+Day 2, Part 1
+
+Implement the function `part1(ranges: &str) -> u32` that is passed a
+string of comma-separated integer ranges, and returns the sum of all
+endpoints that are 'invalid', where an 'invalid' ID is one that can be
+decomposed into two identical values.  For example:
+
+1111 is invalid, as it can be decomposed into 11 and 11.
+121 is valid, since it cannot be decomposed.
+24452445 is invalid, since it can be decomposed into 2445 and 2445.
+
+None of the numbers have leading zeroes; 0101 isn't an ID at all.  101 does not match
+our selection rule.
+
+The ranges are separated by commas (,); each range gives its first ID and last ID separated by a dash (-).
+
+The task is to find the sum of all the invalid values in the provided list of ranges.
+
+For example 1-22,998-1112, 1405-1410 is comprised of 3 intervals:
+* 1-22 which contains 2 invalid values: 11 and 22.
+* 998-1112 which contains 2 invalid values: 1010, and 1111.
+* 1405-1410 which contains 0 invalid values.
+The sum of the invalid values is 11 + 22 + 1010 + 1111 = 2154
+
+For a larger example, the input:
+11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124
+
+Contains the following invalid IDs:
+11-22 has two invalid IDs, 11 and 22.
+95-115 has one invalid ID, 99.
+998-1012 has one invalid ID, 1010.
+1188511880-1188511890 has one invalid ID, 1188511885.
+222220-222224 has one invalid ID, 222222.
+1698522-1698528 contains no invalid IDs.
+446443-446449 has one invalid ID, 446446.
+38593856-38593862 has one invalid ID, 38593859.
+The rest of the ranges contain no invalid IDs.
+Adding up all the invalid IDs in this example produces 1227775554.
+
+Make sure to add tests.
+
+You should try to make the implementation efficient and try to avoid
+directly iterating over each range if possible.  The code should be
+structured in a way that is easy to test, with the individual pieces
+well tested.
