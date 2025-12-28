@@ -3,8 +3,20 @@ use rayon::prelude::*;
 /// Day 3.
 fn main() -> std::io::Result<()> {
     let inputs: Vec<Vec<u8>> = rust_advent::read_number_grid("03")?;
-    println!("Part 1: {}", part1_parallel(&inputs));
-    println!("Part 2: {}", part2_parallel(&inputs));
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() > 1 {
+        match args[1].as_str() {
+            "part1" => println!("Part 1: {}", part1_parallel(&inputs)),
+            "part2" => println!("Part 2: {}", part2_parallel(&inputs)),
+            _ => {
+                println!("Part 1: {}", part1_parallel(&inputs));
+                println!("Part 2: {}", part2_parallel(&inputs));
+            }
+        }
+    } else {
+        println!("Part 1: {}", part1_parallel(&inputs));
+        println!("Part 2: {}", part2_parallel(&inputs));
+    }
     Ok(())
 }
 

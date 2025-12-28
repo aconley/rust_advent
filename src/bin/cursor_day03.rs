@@ -1,8 +1,20 @@
 /// Day 3.
 fn main() -> std::io::Result<()> {
     let inputs: Vec<Vec<u8>> = rust_advent::read_number_grid("03")?;
-    println!("Part 1: {}", part1(&inputs));
-    println!("Part 2: {}", part2(&inputs));
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() > 1 {
+        match args[1].as_str() {
+            "part1" => println!("Part 1: {}", part1(&inputs)),
+            "part2" => println!("Part 2: {}", part2(&inputs)),
+            _ => {
+                println!("Part 1: {}", part1(&inputs));
+                println!("Part 2: {}", part2(&inputs));
+            }
+        }
+    } else {
+        println!("Part 1: {}", part1(&inputs));
+        println!("Part 2: {}", part2(&inputs));
+    }
     Ok(())
 }
 
