@@ -1,0 +1,26 @@
+You will be given a vector of rows of numbers (Vec<Vec<u8>>).
+Your task is to select two values from each row that form the
+largest value when interpreted as a 2 digit, base 10 value.
+
+For example, if the row is [1, 5, 3, 7] you would select
+the values 5 and 7 to form the number 57.
+
+You should then sum the values for each row.
+
+For a larger example with 4 rows:
+
+987654321111111
+811111111111119
+234234234234278
+818181911112111
+
+In 987654321111111, the largest value that can be formed is 98.
+In 811111111111119, the largest value that can be formed is 89.
+In 234234234234278, the largest value that can be formed is 78.
+In 818181911112111, the largest value that can be formed is 92.
+
+The final output is therefore 98 + 89 + 78 + 92 = 357.
+
+Please implement the part1 function in rust to compute this value.
+You should also include tests.
+

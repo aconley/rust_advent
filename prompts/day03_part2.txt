@@ -1,0 +1,25 @@
+You will be given a vector of rows of numbers (Vec<Vec<u8>>).
+Your task is to select twelve values from each row that form the
+largest value when interpreted as a 2 digit, base 10 value.
+
+This is similar to @day03_part1.txt, except that instead
+of selecting 2 values you must select 12.
+
+Using the same example:
+
+987654321111111
+811111111111119
+234234234234278
+818181911112111
+
+In 987654321111111, the largest value that can be formed is 987654321111.
+In 811111111111119, the largest value that can be formed is 811111111119.
+In 234234234234278, the largest value that can be formed is 434234234278.
+In 818181911112111, the largest value that can be formed is 888911112111.
+
+The final output is therefore the sum of these values, 3121910778619.
+
+You should add a part2 function that is called from main
+with the same input as part1 to solve this problem.
+You should also write tests.
+

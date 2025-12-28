@@ -1,0 +1,36 @@
+Part 1:
+
+  Cursor: Solved the problem, but fairly inefficiently: N^2.
+  Claude: Same approach as cursor, also inefficient.  When explicitly
+    prompted to handle larger inputs, it improved the algorithm with
+    a suffix precomputation, and made it parallel using rayon.
+  Gemini: Same approach, but noted that it was N^2, and that this was sufficient
+    for the examples.  When told that the input files would be larger, it
+    came up with a more efficient approach that iterated backwards.
+    When asked about even larger input files, it also added rayon and SIMD friendliness,
+    and also suggested input changes and a divide an conquer approach for each
+    line.
+  Antigravity (G3 Flash): Implemented the O(N) solution the first time.
+    I didn't pursue further optimizations.
+
+  Results: 
+    + to Gemini for noting it was using an inefficient algorithm
+      and why.
+    - to Claude and Cursor for starting with fairly inefficient algorithms.
+    + to Claude and Gemini for doing pretty complicated things when asked
+      to optimize.  I didn't try the others.
+
+  Part 2:
+    Cursor: Solved the problem with a stack based approach.
+    Gemini: Solved using an approach I'm not entirely clear on.
+      Rather than use different approaches for part 1 and part 2, it
+      used a generalized approach for k digits and had part1 use that
+      as well.  I didn't tell it not to, so I'm not sure if that was
+      good or bad, but it confirms Gemini's tendency to be quite eager.
+      The tests it added were a bit anemic.
+    Claude: Also eagerly refactored part1 to use the new helper.
+      Better explanation of the algorithm, and better tests.
+    Antigravity (G3 Flash): Similar approach to Gemini CLI, better explanation.
+      Similarly overly minimal tests by default (just the example).  Added
+      more when prompted.
+      
