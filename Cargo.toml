@@ -6,3 +6,10 @@ edition = "2024"
 [dependencies]
 hyperfine = "1.20.0"
 rayon = "1.10"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "day03_benchmark"
+harness = false

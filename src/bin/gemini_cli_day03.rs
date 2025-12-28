@@ -21,14 +21,14 @@ fn main() -> std::io::Result<()> {
 }
 
 /// Function for part 1.
-fn part1(grid: &Vec<Vec<u8>>) -> u64 {
+pub fn part1(grid: &Vec<Vec<u8>>) -> u64 {
     grid.par_iter()
         .map(|row| find_largest_number(row, 2))
         .sum()
 }
 
 /// Function for part 2.
-fn part2(grid: &Vec<Vec<u8>>) -> u64 {
+pub fn part2(grid: &Vec<Vec<u8>>) -> u64 {
     grid.par_iter()
         .map(|row| find_largest_number(row, 12))
         .sum()

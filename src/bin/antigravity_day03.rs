@@ -25,7 +25,7 @@ fn main() -> std::io::Result<()> {
 /// For example, in the row [1, 2, 5, 2, 1] the largest number is 52.
 /// This function returns the sum of the largest numbers for each row
 /// over all provided rows.
-fn part1(grid: &Vec<Vec<u8>>) -> u64 {
+pub fn part1(grid: &Vec<Vec<u8>>) -> u64 {
     let mut total_sum: u64 = 0;
 
     for row in grid {
@@ -57,7 +57,7 @@ fn part1(grid: &Vec<Vec<u8>>) -> u64 {
 ///
 /// Find the largest 12-digit number that can be formed by selecting
 /// twelve digits from each row in order, and return their sum.
-fn part2(grid: &Vec<Vec<u8>>) -> u64 {
+pub fn part2(grid: &Vec<Vec<u8>>) -> u64 {
     let mut total_sum: u64 = 0;
     let k = 12;
 

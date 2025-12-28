@@ -25,7 +25,7 @@ fn main() -> std::io::Result<()> {
 /// For example, in the row [1, 2, 5, 2, 1] the largest number is 52.
 /// This function returns the sum of the largest numbers for each row
 /// over all provided rows.
-fn part1(grid: &Vec<Vec<u8>>) -> u64 {
+pub fn part1(grid: &Vec<Vec<u8>>) -> u64 {
     grid.iter()
         .map(|row| {
             let mut max_value = 0u64;
@@ -46,7 +46,7 @@ fn part1(grid: &Vec<Vec<u8>>) -> u64 {
 /// can be formed by selecting 12 digits from the row in order.
 /// This function returns the sum of the largest numbers for each row
 /// over all provided rows.
-fn part2(grid: &Vec<Vec<u8>>) -> u64 {
+pub fn part2(grid: &Vec<Vec<u8>>) -> u64 {
     grid.iter()
         .map(|row| {
             if row.len() < 12 {
