@@ -1,0 +1,45 @@
+I am going to give you a 2D grid as a sequence of lines (&[String]).
+Each line consists of '@' and '.' characters, where '@' represents an object,
+and '.' an empty space.
+
+I want to count the number of objects (@) in the grid that have fewwer than
+4 adjacent positions containing another object, not including itself.
+Positions are adjacent horizontally, vertically, or diagonally.
+
+So, for example, if we consider the central object in the following grid:
+
+..@
+.@.
+.@@
+
+it has 3 adjacent objects, and therefore should be counted.  And in this
+grid as a whole, all the objects have 4 or fewer neighbors, so the value
+that should be returned is 4.
+
+For a larger example, the grid:
+
+..@@.@@@@.
+@@@.@.@.@@
+@@@@@.@.@@
+@.@@@@..@.
+@@.@@@@.@@
+.@@@@@@@.@
+.@.@.@.@@@
+@.@@@.@@@@
+.@@@@@@@@.
+@.@.@@@.@.
+
+has 13 such objects, which are denoted by xs in the following display:
+
+..xx.xx@x.
+x@@.@.@.@@
+@@@@@.x.@@
+@.@@@@..@.
+x@.@@@@.@x
+.@@@@@@@.@
+.@.@.@.@@@
+x.@@@.@@@@
+.@@@@@@@@.
+x.x.@@@.x.
+
+Please do so by implementing the function part1.  Make sure to add some tests.

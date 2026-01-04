@@ -1,0 +1,64 @@
+Part 1:  Pretty straightforward
+
+  Cursor: Solved.  Used chars().nth() to index into string, which is rather
+     inefficient.  When asked to review it's own code, it identified a number
+     of improvements, including not using nth and doing an early exit.
+  Antigravity: Using gemini3 flash.  Similar code initially, when asked to refine
+     it ended up making it more complicated and less clear than the Cursor
+     version for no particularly great reason.  Tests better than Cursor version.
+     When explicitly asked to refactor into a subfunction, it chose a poor name
+     (count), and when asked to improve didn't really.
+  Claude: Similar to cursor solution, but didn't use nth.  Better tests than
+     Cursor but not as good as Antigravity.  Didn't take advantage of ASCII
+     or early exit, was rebuilding lines repeatedly.  When asked to review it's
+     own code it improved the modularity and efficiency, but still didn't early
+     exit nor take advantage of ASCII.  When asked to do so, it resulted in
+     a confusingly named sub-function (still count, but bailed once count > 3).
+  Gemini CLI: I asked it to plan, implement, review.  It didn't seem to do the
+     review, but produced reasonable code that was relatively efficient but was
+     missing the early exit option.  When asked to review it's own code it
+     suggested early exit and a refactor into a helper function, and also
+     some other optimizations (core vs edge to avoid boundary checks) that
+     it recommended not doing as being overly complex.  Pretty solid self review,
+     best so far.  The test coverage was a bit anemic, so I had to ask it to
+     improve.
+
+  Conclusion: everything solved it, but beyond that it was a bit of a mixed
+     bag.  Antigravity was a bit disappointing here, it's code was rather
+     complex.  Self review was generally helpful, the Gemini CLI one was
+     the best, in particular by recommending against some possibilities.
+     It may have been gemini 3 pro, which seemed to do better.  Gemini CLI
+     probably the winner, although the tests were a bit weak.
+
+Part 2: Extend the problem
+   Claude: Came up with a pretty straightforward iterate solution.  It built
+     up the list of things to remove in each iteration rather than removing
+     on the fly, which I'm not sure was needed.  It's first implementation
+     resulted in some duplication of code, but asking it to review itself fixed
+     that.  It's solution to counting with mutable and non-mutable wasn't
+     very good.
+   Gemini CLI: Similar solution to Claude, without the duplication.  Again,
+     pretty solid self review, better than Claude.  Much better solution to
+     mutable and non-mutable counting.
+   Antigravity: Went in a different direction, maintaining neighbor counts and
+     using a queue.  Which I think is probably substantially more efficient
+     than the previous 2.  Tests a bit anemic until prompting.
+   Cursor: A lot of code duplication in solution.  When asked to review,
+     it didn't dedup accross the problems, but it did find an optimization
+     to only check neighbors of things removed in last iteration.  Similar
+     loop solution to Claude and Gemini.
+
+Overall:
+    Bit of a mixed bag, some disappointments for all.  Asking agents to review
+    themselves generally positive for all.  All agents struggled with bad
+    subfunction names, some were able to notice this themselves, some had
+    to be forced.
+
+    Cursor: didn't do as well as the others.  Some obvious inefficiencies,
+     not the clearest code.
+    Claude: a bit disappointing here.  Couldn't find early exit, poor handling
+     of mut plus non-mut.  Some duplication.  Wrote best tests.
+    Gemini CLI: Best self review by far, very nice.  Needed to be told to
+     write better tests, although prompt already said that.
+    Antigravity: didn't do so well on first part, better than everything else
+     on second.  I think it was using Flash vs Pro, unlike CLI.

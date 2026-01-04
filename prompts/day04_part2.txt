@@ -1,0 +1,65 @@
+Continuing on from the problem in @day04_part1.txt, we are going to implement
+the function part2 that extends the problem as follows:
+
+Now, instead of simply counting the number of objects with < 4 neighbors,
+an object can now be removed from the grid if it has < 4 neighbors.  If an
+object is removed, it may allow further objects to be removed.  The task is now
+to determine how many objects can be removed from the grid.
+
+Using the same example:
+
+..xx.xx@x.
+x@@.@.@.@@
+@@@@@.x.@@
+@.@@@@..@.
+x@.@@@@.@x
+.@@@@@@@.@
+.@.@.@.@@@
+x.@@@.@@@@
+.@@@@@@@@.
+x.x.@@@.x.
+
+initially 13 objects can be removed (denoted with an x, but note that xs
+do not appear in the input):
+
+..xx.xx@x.
+x@@.@.@.@@
+@@@@@.x.@@
+@.@@@@..@.
+x@.@@@@.@x
+.@@@@@@@.@
+.@.@.@.@@@
+x.@@@.@@@@
+.@@@@@@@@.
+x.x.@@@.x.
+
+Once those are removed, there are 12 more objects that can be removed:
+
+.......x..
+.@@.x.x.@x
+x@@@@...@@
+x.@@@@..x.
+.@.@@@@.x.
+.x@@@@@@.x
+.x.@.@.@@@
+..@@@.@@@@
+.x@@@@@@@.
+....@@@...
+
+Then 7, 5, 2, 1, 1, 1, 1 finally leaving the grid
+..........
+..........
+..........
+....@@....
+...@@@@...
+...@@@@@..
+...@.@.@@.
+...@@.@@@.
+...@@@@@..
+....@@@...
+
+Therefore, 43 rolls can be removed, so part2 should return 43 with this input.
+
+Please implement the part2 function to solve this problem.  You should again
+add tests, which should go beyond just the example above.  You should also
+pay attention to issues of clarity and performance.
