@@ -1,7 +1,12 @@
 {
   "name": "Rust Advent of Code",
-  "image": "mcr.microsoft.com/devcontainers/rust:1-bookworm",
-
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "runArgs": [
+     "--env-file",
+     "${localWorkspaceFolder}/.env-secrets"
+  ],
   "customizations": {
     "vscode": {
       "settings": {
