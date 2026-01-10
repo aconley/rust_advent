@@ -16,11 +16,16 @@ different software development agents in rust.
 
 * Performance should always be a consideration, but generally not to the
   point of significantly harming readability.
+* You should assume that the inputs will scale up to moderate size, and
+  therefore should not optimize for or assume small inputs unless I specify,
+  in my inputs.  Similarly, you should try to avoid large memory allocations
+  if it does not substantially incrase complexity.
 * Always make sure your code build before completing a task using `cargo build`.
+* Use `cargo fmt` to ensure good formatting.
 
 # Testing
 
-* You should always try to go beyond the provided basic examples when
+* You should always try to go beyond the provided examples when
   creating unit tests.
 * Always ensure your code passes the unit tests using `cargo test`.
 
