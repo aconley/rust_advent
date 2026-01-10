@@ -64,13 +64,35 @@ fn merge_ranges(ranges: &[(isize, isize)]) -> Vec<(isize, isize)> {
 ///
 /// Calculate the sum of lengths of all merged ranges.
 /// Each range is inclusive, so the length of range [a, b] is b - a + 1.
+///
+/// This optimized version merges and sums in a single pass without allocating
+/// a vector for the merged ranges, saving O(m) space and eliminating a second iteration.
 fn part2(input: &rust_advent::RangeData) -> usize {
-    let merged_ranges = merge_ranges(&input.ranges);
+    if input.ranges.is_empty() {
+        return 0;
+    }
 
-    merged_ranges
-        .iter()
-        .map(|&(start, end)| (end - start + 1) as usize)
-        .sum()
+    // Sort ranges by start position
+    let mut sorted_ranges = input.ranges.to_vec();
+    sorted_ranges.sort_unstable_by_key(|&(start, _)| start);
+
+    let mut sum = 0;
+    let mut current = sorted_ranges[0];
+
+    for &(start, end) in &sorted_ranges[1..] {
+        if start <= current.1 + 1 {
+            // Merge by extending the end if necessary
+            current.1 = current.1.max(end);
+        } else {
+            // No overlap, add current range length to sum
+            sum += (current.1 - current.0 + 1) as usize;
+            current = (start, end);
+        }
+    }
+    // Add the last range
+    sum += (current.1 - current.0 + 1) as usize;
+
+    sum
 }
 
 #[cfg(test)]

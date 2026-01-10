@@ -17,7 +17,7 @@ the values 5, 11, and 17 are in at least one range, so the returned value
 should be 3.
 
 Please implement the rust function part1 to solve this problem in the specified
-file.  
+file.  Add a brief description of the problem solved.
 
 * You should pay particular attention to clarity and efficiency.
 * You should not need to consider any other files other than lib.rs and the 

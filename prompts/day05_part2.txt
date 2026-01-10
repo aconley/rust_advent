@@ -12,7 +12,7 @@ so the result would be 3 + 11 = 14.
 Note that the input also containes a field values that you should ignore.
 
 Please implement the rust function part2 to solve this problem in the specified
-file.  
+file.  Add a description of the problem solved.
 
 * You should pay particular attention to clarity and efficiency.
 * You should not need to consider any other files other than lib.rs and the 

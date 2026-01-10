@@ -1,6 +1,6 @@
 Part 1:
   Gemini CLI: Straightforward solution, decent tests.  It tried to run main
-     and correctly concluded the problem (can't see the input becaus of the
+     and correctly concluded the problem (can't see the input because of the
      sandbox) was outside the scope it could solve.  Note: accidentally used
      Gemini 3.0.  It ran cargo fmt on the directory, which I oddly enough
      nothing else had ever bothered to do.
@@ -10,6 +10,7 @@ Part 1:
      which in fairness I didn't specify.  It explained the problem was 'Advent
      of code style'. After specifying, improved and correctly stated complexity.
 Added problem size statement to prompt.
+  Gemini 3 CLI: Very similar to claude.
 
 Part 2:
   Gemini CLI: Straightforward solution, but duplicated merge.
@@ -18,4 +19,10 @@ Part 2:
      be.  When asked explicitly about making part2 more efficient, correctly
      fixed.  Decent tests.  Again, accidentally Gemini 2.5.
   Claude Code: solved quickly and efficiently, taking advantage of already
-    existing seperated merge function.
+    existing seperated merge function.  However, it wasted space by constructing
+    the merged ranges.  When asked to improve, it suggested the standard
+    improvement, and asked whether or not to apply it, which was nice.
+  Gemini 3 CLI: Very similar to Claude.  When asked to make part2 more
+    efficient it discussed using rayon, decided that was overly complex and
+    that it should just avoid allocating the merge.  It didn't ask before doing
+    it though.
