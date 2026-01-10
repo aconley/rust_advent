@@ -20,5 +20,6 @@ file.
 * Please also include tests.  These should include at least the above example,
   but you should also create other tests as you see appopriate.
 * You do not need to touch the function part1, nor run main.
+* The inputs may be large -- 1000s of ranges -- and have high amounts of overlap.
 
 

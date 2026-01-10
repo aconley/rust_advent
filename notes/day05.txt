@@ -2,7 +2,14 @@ Part 1:
   Gemini CLI: Straightforward solution, decent tests.  It tried to run main
      and correctly concluded the problem (can't see the input becaus of the
      sandbox) was outside the scope it could solve.  Note: accidentally used
-     Gemini 3.0.
+     Gemini 3.0.  It ran cargo fmt on the directory, which I oddly enough
+     nothing else had ever bothered to do.
+  Claude: Solved it with a very small amount of code.  Correctly explained
+     how it worked given an example.  But: not very efficient! O(N_range * N_val).
+     When asked, correctly stated the code wasn't a good idea for 10k sized inputs,
+     which in fairness I didn't specify.  It explained the problem was 'Advent
+     of code style'. After specifying, improved and correctly stated complexity.
+Added problem size statement to prompt.
 
 Part 2:
   Gemini CLI: Straightforward solution, but duplicated merge.
@@ -10,3 +17,5 @@ Part 2:
      function.  However, the solution to part2 wasn't as efficient as it could
      be.  When asked explicitly about making part2 more efficient, correctly
      fixed.  Decent tests.  Again, accidentally Gemini 2.5.
+  Claude Code: solved quickly and efficiently, taking advantage of already
+    existing seperated merge function.

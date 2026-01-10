@@ -25,3 +25,5 @@ file.
 * Please also include tests.  These should include at least the above example,
   but you should also create other tests as you see appopriate.
 * You do not need to touch the function part2, nor run main.
+* The inputs may be many thousands of ranges and values, and a large fraction
+  of overlapping ranges, so your implementation should scale reasonably well.
