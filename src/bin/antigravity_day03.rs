@@ -7,8 +7,8 @@ fn main() -> std::io::Result<()> {
             "part1" => println!("Part 1: {}", part1(&inputs)),
             "part2" => println!("Part 2: {}", part2(&inputs)),
             _ => {
-                 println!("Part 1: {}", part1(&inputs));
-                 println!("Part 2: {}", part2(&inputs));
+                println!("Part 1: {}", part1(&inputs));
+                println!("Part 2: {}", part2(&inputs));
             }
         }
     } else {

@@ -1,0 +1,27 @@
+RangeData, defined in @src/lib.rs is a struct consisting of a vector of 
+values and a vector of inclusive ranges.  The ranges may overlap.
+
+Given a RangeData, you should count the number of values that are present
+in any range.  Note that ranges may overlap, but a value that is in multiple
+ranges should count only once.
+
+For example, given the following ranges:
+
+3-5, 10-14, 16-20, 12-18
+
+and values
+
+1, 5, 8, 11, 17, 32
+
+the values 5, 11, and 17 are in at least one range, so the returned value
+should be 3.
+
+Please implement the rust function part1 to solve this problem in the specified
+file.  
+
+* You should pay particular attention to clarity and efficiency.
+* You should not need to consider any other files other than lib.rs and the 
+   file you are implementing in.
+* Please also include tests.  These should include at least the above example,
+  but you should also create other tests as you see appopriate.
+* You do not need to touch the function part2, nor run main.

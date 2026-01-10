@@ -28,9 +28,7 @@ fn main() -> std::io::Result<()> {
 /// This function returns the sum of the largest numbers for each row
 /// over all provided rows.
 pub fn part1(grid: &Vec<Vec<u8>>) -> u64 {
-    grid.iter()
-        .map(|row| find_max_two_digit(row))
-        .sum()
+    grid.iter().map(|row| find_max_two_digit(row)).sum()
 }
 
 /// Function for part 1 (parallel version using rayon).
@@ -38,9 +36,7 @@ pub fn part1(grid: &Vec<Vec<u8>>) -> u64 {
 /// For large input files with many rows, this version processes rows in parallel
 /// across multiple CPU cores for better performance.
 pub fn part1_parallel(grid: &Vec<Vec<u8>>) -> u64 {
-    grid.par_iter()
-        .map(|row| find_max_two_digit(row))
-        .sum()
+    grid.par_iter().map(|row| find_max_two_digit(row)).sum()
 }
 
 /// Function for part 2 (single-threaded).
@@ -49,9 +45,7 @@ pub fn part1_parallel(grid: &Vec<Vec<u8>>) -> u64 {
 /// can be formed by selecting 12 numbers from the row in order.
 /// Returns the sum of these numbers across all rows.
 pub fn part2(grid: &Vec<Vec<u8>>) -> u64 {
-    grid.iter()
-        .map(|row| find_max_n_digit(row, 12))
-        .sum()
+    grid.iter().map(|row| find_max_n_digit(row, 12)).sum()
 }
 
 /// Function for part 2 (parallel version using rayon).
@@ -59,9 +53,7 @@ pub fn part2(grid: &Vec<Vec<u8>>) -> u64 {
 /// For large input files with many rows, this version processes rows in parallel
 /// across multiple CPU cores for better performance.
 pub fn part2_parallel(grid: &Vec<Vec<u8>>) -> u64 {
-    grid.par_iter()
-        .map(|row| find_max_n_digit(row, 12))
-        .sum()
+    grid.par_iter().map(|row| find_max_n_digit(row, 12)).sum()
 }
 
 /// Optimized helper function to find the maximum 2-digit number in a row.

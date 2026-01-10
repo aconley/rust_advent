@@ -9,7 +9,7 @@ fn main() -> std::io::Result<()> {
 /// Part 1: Count the number of times the dial is pointing at 0 after a rotation.
 ///
 /// The dial goes from 0 to 99, and starts at position 50, with wrapping.
-/// 
+///
 /// Inputs:
 ///   input: a vector of strings.  Each string is a rotation of the dial expressed
 ///          as a single character direction (L or R) followed by a number of clicks.
@@ -25,7 +25,7 @@ fn part1(inputs: &[String]) -> usize {
         }
 
         let direction = rotation.chars().next().unwrap();
-        // Parse the numeric part. 
+        // Parse the numeric part.
         // We assume the input is well-formed as "L<num>" or "R<num>".
         let amount_str = &rotation[1..];
         let amount: i32 = match amount_str.parse() {
@@ -37,11 +37,11 @@ fn part1(inputs: &[String]) -> usize {
             'L' => {
                 // Moving left: subtract amount. Use rem_euclid for correct negative wrapping.
                 current_pos = (current_pos - amount).rem_euclid(100);
-            },
+            }
             'R' => {
                 // Moving right: add amount.
                 current_pos = (current_pos + amount).rem_euclid(100);
-            },
+            }
             _ => {
                 // Unknown direction, ignore or panic. Ignoring for robustness.
             }
@@ -59,7 +59,7 @@ fn part1(inputs: &[String]) -> usize {
 /// during a rotation.
 ///
 /// The dial goes from 0 to 99, and starts at position 50, with wrapping.
-/// 
+///
 /// Inputs:
 ///   input: a vector of strings.  Each string is a rotation of the dial expressed
 ///          as a single character direction (L or R) followed by a number of clicks.
@@ -87,12 +87,12 @@ fn part2(inputs: &[String]) -> i64 {
                 // Number of multiples of 100 in [A, B] is floor(B/100) - floor((A-1)/100)
                 let upper = current_pos - 1;
                 let lower = current_pos - amount;
-                
+
                 let hits = upper.div_euclid(100) - (lower - 1).div_euclid(100);
                 zero_count += hits;
 
                 current_pos = (current_pos - amount).rem_euclid(100);
-            },
+            }
             'R' => {
                 // Range visited: [current_pos + 1, current_pos + amount]
                 // Note: current_pos + 1 is the first visited, current_pos + amount is last.
@@ -101,12 +101,12 @@ fn part2(inputs: &[String]) -> i64 {
                 // B = current_pos + amount
                 // Formula: floor((current_pos + amount)/100) - floor((current_pos + 1 - 1)/100)
                 //        = floor((current_pos + amount)/100) - floor(current_pos/100)
-                
+
                 let hits = (current_pos + amount).div_euclid(100) - current_pos.div_euclid(100);
                 zero_count += hits;
-                
+
                 current_pos = (current_pos + amount).rem_euclid(100);
-            },
+            }
             _ => {}
         }
     }

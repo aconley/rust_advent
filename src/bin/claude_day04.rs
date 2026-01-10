@@ -18,9 +18,7 @@ fn part1(inputs: &[String]) -> usize {
 
     // Pre-convert grid to 2D byte array for efficient access
     // Since input only contains ASCII characters (@ and .), bytes are more efficient than chars
-    let grid: Vec<&[u8]> = inputs.iter()
-        .map(|line| line.as_bytes())
-        .collect();
+    let grid: Vec<&[u8]> = inputs.iter().map(|line| line.as_bytes()).collect();
 
     let rows = grid.len();
     let cols = grid[0].len();
@@ -29,7 +27,8 @@ fn part1(inputs: &[String]) -> usize {
 
     for row in 0..rows {
         for col in 0..cols {
-            if grid[row][col] == b'@' && has_fewer_than_n_neighbors(&grid, row, col, rows, cols, 4) {
+            if grid[row][col] == b'@' && has_fewer_than_n_neighbors(&grid, row, col, rows, cols, 4)
+            {
                 count += 1;
             }
         }
@@ -46,9 +45,14 @@ where
     F: Fn(usize, usize) -> u8,
 {
     const DIRECTIONS: [(i32, i32); 8] = [
-        (-1, -1), (-1, 0), (-1, 1),
-        (0, -1),           (0, 1),
-        (1, -1),  (1, 0),  (1, 1),
+        (-1, -1),
+        (-1, 0),
+        (-1, 1),
+        (0, -1),
+        (0, 1),
+        (1, -1),
+        (1, 0),
+        (1, 1),
     ];
 
     let mut count = 0;
@@ -56,9 +60,12 @@ where
         let new_row = row as i32 + dr;
         let new_col = col as i32 + dc;
 
-        if new_row >= 0 && new_row < rows as i32 &&
-           new_col >= 0 && new_col < cols as i32 &&
-           get_cell(new_row as usize, new_col as usize) == b'@' {
+        if new_row >= 0
+            && new_row < rows as i32
+            && new_col >= 0
+            && new_col < cols as i32
+            && get_cell(new_row as usize, new_col as usize) == b'@'
+        {
             count += 1;
             // Early exit optimization: stop counting after 4
             if count >= 4 {
@@ -77,7 +84,7 @@ fn has_fewer_than_n_neighbors(
     col: usize,
     rows: usize,
     cols: usize,
-    threshold: usize
+    threshold: usize,
 ) -> bool {
     count_neighbors(|r, c| grid[r][c], row, col, rows, cols) < threshold
 }
@@ -97,9 +104,7 @@ fn part2(inputs: &[String]) -> usize {
     }
 
     // Create mutable grid for iterative removal
-    let mut grid: Vec<Vec<u8>> = inputs.iter()
-        .map(|line| line.as_bytes().to_vec())
-        .collect();
+    let mut grid: Vec<Vec<u8>> = inputs.iter().map(|line| line.as_bytes().to_vec()).collect();
 
     let rows = grid.len();
     let cols = grid[0].len();
@@ -111,7 +116,9 @@ fn part2(inputs: &[String]) -> usize {
 
         for row in 0..rows {
             for col in 0..cols {
-                if grid[row][col] == b'@' && has_fewer_than_n_neighbors_mut(&grid, row, col, rows, cols, 4) {
+                if grid[row][col] == b'@'
+                    && has_fewer_than_n_neighbors_mut(&grid, row, col, rows, cols, 4)
+                {
                     to_remove.push((row, col));
                 }
             }
@@ -141,7 +148,7 @@ fn has_fewer_than_n_neighbors_mut(
     col: usize,
     rows: usize,
     cols: usize,
-    threshold: usize
+    threshold: usize,
 ) -> bool {
     count_neighbors(|r, c| grid[r][c], row, col, rows, cols) < threshold
 }
@@ -152,11 +159,7 @@ mod tests {
 
     #[test]
     fn test_small_example() {
-        let grid = vec![
-            "..@".to_string(),
-            ".@.".to_string(),
-            ".@@".to_string(),
-        ];
+        let grid = vec!["..@".to_string(), ".@.".to_string(), ".@@".to_string()];
         // All 4 objects have fewer than 4 neighbors
         assert_eq!(part1(&grid), 4);
     }
@@ -187,21 +190,13 @@ mod tests {
 
     #[test]
     fn test_no_objects() {
-        let grid = vec![
-            "...".to_string(),
-            "...".to_string(),
-            "...".to_string(),
-        ];
+        let grid = vec!["...".to_string(), "...".to_string(), "...".to_string()];
         assert_eq!(part1(&grid), 0);
     }
 
     #[test]
     fn test_all_objects_qualify() {
-        let grid = vec![
-            "@.@".to_string(),
-            "...".to_string(),
-            "@.@".to_string(),
-        ];
+        let grid = vec!["@.@".to_string(), "...".to_string(), "@.@".to_string()];
         // All 4 objects have 0 or 1 neighbors, all qualify
         assert_eq!(part1(&grid), 4);
     }
@@ -224,11 +219,7 @@ mod tests {
 
     #[test]
     fn test_more_than_four_neighbors() {
-        let grid = vec![
-            "@@@".to_string(),
-            "@@@".to_string(),
-            "@@@".to_string(),
-        ];
+        let grid = vec!["@@@".to_string(), "@@@".to_string(), "@@@".to_string()];
         // The center object has 8 neighbors
         // Corner objects have 3 neighbors each (4 corners)
         // Edge objects have 5 neighbors each (4 edges)
@@ -238,11 +229,7 @@ mod tests {
 
     #[test]
     fn test_single_object() {
-        let grid = vec![
-            "...".to_string(),
-            ".@.".to_string(),
-            "...".to_string(),
-        ];
+        let grid = vec!["...".to_string(), ".@.".to_string(), "...".to_string()];
         // Single object with 0 neighbors
         assert_eq!(part1(&grid), 1);
     }
@@ -262,11 +249,7 @@ mod tests {
 
     #[test]
     fn test_edge_vs_center() {
-        let grid = vec![
-            ".@.".to_string(),
-            "@@@".to_string(),
-            ".@.".to_string(),
-        ];
+        let grid = vec![".@.".to_string(), "@@@".to_string(), ".@.".to_string()];
         // Center object has 4 neighbors (exactly 4, not counted)
         // All edge objects have 2-3 neighbors (all counted)
         assert_eq!(part1(&grid), 4);
@@ -329,22 +312,14 @@ mod tests {
 
     #[test]
     fn test_part2_all_removed_one_pass() {
-        let grid = vec![
-            "@.@".to_string(),
-            "...".to_string(),
-            "@.@".to_string(),
-        ];
+        let grid = vec!["@.@".to_string(), "...".to_string(), "@.@".to_string()];
         // All 4 objects have 0-1 neighbors, all removed in one pass
         assert_eq!(part2(&grid), 4);
     }
 
     #[test]
     fn test_part2_cascading_removal() {
-        let grid = vec![
-            ".@.".to_string(),
-            "@@@".to_string(),
-            ".@.".to_string(),
-        ];
+        let grid = vec![".@.".to_string(), "@@@".to_string(), ".@.".to_string()];
         // Center has 4 neighbors (not removed initially)
         // Edges have 2-3 neighbors (removed in first pass: 4 objects)
         // After first pass, center has 0 neighbors (removed in second pass: 1 object)
@@ -354,20 +329,14 @@ mod tests {
 
     #[test]
     fn test_part2_small_example() {
-        let grid = vec![
-            "..@".to_string(),
-            ".@.".to_string(),
-            ".@@".to_string(),
-        ];
+        let grid = vec!["..@".to_string(), ".@.".to_string(), ".@@".to_string()];
         // All 4 objects have < 4 neighbors, all should be removed
         assert_eq!(part2(&grid), 4);
     }
 
     #[test]
     fn test_part2_line_removal() {
-        let grid = vec![
-            "@@@@@".to_string(),
-        ];
+        let grid = vec!["@@@@@".to_string()];
         // 5 objects in a line
         // End objects have 1 neighbor each (removed first: 2)
         // Then next layer has 1 neighbor each (removed: 2)
@@ -394,41 +363,28 @@ mod tests {
 
     #[test]
     fn test_part2_single_object() {
-        let grid = vec![
-            "@".to_string(),
-        ];
+        let grid = vec!["@".to_string()];
         // Single object with 0 neighbors - should be removed
         assert_eq!(part2(&grid), 1);
     }
 
     #[test]
     fn test_part2_2x2_grid() {
-        let grid = vec![
-            "@@".to_string(),
-            "@@".to_string(),
-        ];
+        let grid = vec!["@@".to_string(), "@@".to_string()];
         // All 4 objects have 3 neighbors - all removed in first pass
         assert_eq!(part2(&grid), 4);
     }
 
     #[test]
     fn test_part2_only_empty_spaces() {
-        let grid = vec![
-            "...".to_string(),
-            "...".to_string(),
-            "...".to_string(),
-        ];
+        let grid = vec!["...".to_string(), "...".to_string(), "...".to_string()];
         // No objects to remove
         assert_eq!(part2(&grid), 0);
     }
 
     #[test]
     fn test_part2_3x3_all_objects() {
-        let grid = vec![
-            "@@@".to_string(),
-            "@@@".to_string(),
-            "@@@".to_string(),
-        ];
+        let grid = vec!["@@@".to_string(), "@@@".to_string(), "@@@".to_string()];
         // 9 objects: corners (3 neighbors) + edges (5 neighbors) + center (8 neighbors)
         // Pass 1: Remove 4 corners
         // Pass 2: Remove 4 edges (now have 2-3 neighbors)
@@ -437,4 +393,3 @@ mod tests {
         assert_eq!(part2(&grid), 9);
     }
 }
- 

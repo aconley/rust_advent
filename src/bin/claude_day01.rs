@@ -9,7 +9,7 @@ fn main() -> std::io::Result<()> {
 /// Part 1: Count the number of times the dial is pointing at 0 after a rotation.
 ///
 /// The dial goes from 0 to 99, and starts at position 50, with wrapping.
-/// 
+///
 /// Inputs:
 ///   input: a vector of strings.  Each string is a rotation of the dial expressed
 ///          as a single character direction (L or R) followed by a number of clicks.
@@ -41,7 +41,7 @@ fn part1(inputs: &[String]) -> i32 {
 /// during a rotation.
 ///
 /// The dial goes from 0 to 99, and starts at position 50, with wrapping.
-/// 
+///
 /// Inputs:
 ///   input: a vector of strings.  Each string is a rotation of the dial expressed
 ///          as a single character direction (L or R) followed by a number of clicks.
@@ -111,7 +111,7 @@ mod tests {
     fn test_multiple_zeros() {
         // Test landing on 0 multiple times
         let input = vec![
-            "L50".to_string(), // 50 -> 0 (count = 1)
+            "L50".to_string(),  // 50 -> 0 (count = 1)
             "R100".to_string(), // 0 -> 0 (count = 2)
             "L100".to_string(), // 0 -> 0 (count = 3)
         ];
@@ -147,7 +147,7 @@ mod tests {
     fn test_part2_left_from_zero() {
         // Test rotating left from position 0
         let input = vec![
-            "L50".to_string(), // 50 -> 0 (1 zero)
+            "L50".to_string(),  // 50 -> 0 (1 zero)
             "L100".to_string(), // 0 -> 0 via full rotation (1 zero)
         ];
         assert_eq!(part2(&input), 2);

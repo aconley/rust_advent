@@ -1,0 +1,12 @@
+Part 1:
+  Gemini CLI: Straightforward solution, decent tests.  It tried to run main
+     and correctly concluded the problem (can't see the input becaus of the
+     sandbox) was outside the scope it could solve.  Note: accidentally used
+     Gemini 3.0.
+
+Part 2:
+  Gemini CLI: Straightforward solution, but duplicated merge.
+     When asked to improve clarity and efficiency, it factored out the merge
+     function.  However, the solution to part2 wasn't as efficient as it could
+     be.  When asked explicitly about making part2 more efficient, correctly
+     fixed.  Decent tests.  Again, accidentally Gemini 2.5.

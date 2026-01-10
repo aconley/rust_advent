@@ -22,9 +22,7 @@ fn main() -> std::io::Result<()> {
 
 /// Function for part 1.
 pub fn part1(grid: &Vec<Vec<u8>>) -> u64 {
-    grid.par_iter()
-        .map(|row| find_largest_number(row, 2))
-        .sum()
+    grid.par_iter().map(|row| find_largest_number(row, 2)).sum()
 }
 
 /// Function for part 2.
@@ -48,11 +46,11 @@ fn find_largest_number(row: &[u8], k: usize) -> u64 {
         // search_limit: how many elements from current_slice we can consider
         // while still leaving (needed - 1) elements for later.
         let search_limit = current_slice.len() - (needed - 1);
-        
+
         if search_limit == 1 {
-             result = result * 10 + (current_slice[0] as u64);
-             current_slice = &current_slice[1..];
-             continue;
+            result = result * 10 + (current_slice[0] as u64);
+            current_slice = &current_slice[1..];
+            continue;
         }
 
         let (digit, idx) = find_max_and_first_index(&current_slice[0..search_limit]);
@@ -72,7 +70,9 @@ fn find_max_u8(slice: &[u8]) -> u8 {
         let chunk_max = *chunk.iter().max().unwrap_or(&0);
         if chunk_max > max_val {
             max_val = chunk_max;
-            if max_val == 9 { return 9; }
+            if max_val == 9 {
+                return 9;
+            }
         }
     }
 
@@ -137,14 +137,12 @@ mod tests {
     #[test]
     fn test_part2_greedy_selection() {
         // row: [9, 1, 9, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1] (len 13)
-        // k=12. 
+        // k=12.
         // 1st digit: search limit 13-11=2 -> [9, 1]. Max 9 at idx 0.
         // 2nd digit: search limit 12-10=2 -> [1, 9]. Max 9 at idx 1.
         // 3rd digit: search limit 11-9=2 -> [2, 3]. Max 3 at idx 1.
         // etc.
-        let grid = vec![
-            vec![9, 1, 9, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1],
-        ];
+        let grid = vec![vec![9, 1, 9, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1]];
         assert_eq!(part2(&grid), 992345678901);
     }
 }

@@ -1,4 +1,3 @@
-use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
@@ -92,31 +91,91 @@ pub fn read_number_grid(day: &str) -> std::io::Result<Vec<Vec<u8>>> {
     Ok(parse_to_number_grid(&read_file_as_string(day)?))
 }
 
-pub struct RulesAndUpdates {
-    // Precedence of the rules.  before[x] is the set of pages that must be printed before x.
-    pub before: HashMap<u16, HashSet<u16>>,
-    // The pages.
-    pub pages: Vec<Vec<u16>>,
+#[derive(Debug, PartialEq)]
+pub struct RangeData {
+    pub ranges: Vec<(isize, isize)>,
+    pub values: Vec<isize>,
 }
 
-pub fn read_rules_and_updates(day: &str) -> std::io::Result<RulesAndUpdates> {
-    let input = std::fs::read_to_string(get_input_path(day))?;
-    let (raw_rules, raw_pages) = input.split_once("\n\n").unwrap();
-    let mut before = HashMap::<u16, HashSet<u16>>::new();
-    for line in raw_rules.lines() {
-        let (a, b) = line.split_once('|').expect("line did not contain |");
-        before
-            .entry(b.parse::<u16>().expect("Couldn't parse b as integer"))
-            .or_default()
-            .insert(a.parse::<u16>().expect("Couldn't parse a as integer"));
+fn parse_range_data(input: &str) -> Result<RangeData, String> {
+    let parts: Vec<&str> = input
+        .split("\n\n")
+        .filter(|s| !s.trim().is_empty())
+        .collect();
+    if parts.len() != 2 {
+        return Err("Input must have two sections separated by empty lines".to_string());
     }
-    let pages = raw_pages
+
+    let ranges_str = parts[0].trim();
+    let values_str = parts[1].trim();
+
+    let ranges: Result<Vec<(isize, isize)>, String> = ranges_str
         .lines()
         .map(|line| {
-            line.split(',')
-                .map(|w| w.parse::<u16>().expect("Couldn't parse page as integer"))
-                .collect::<Vec<_>>()
+            let mut split = line.split('-');
+            let start: isize = split
+                .next()
+                .ok_or_else(|| "Missing start of range".to_string())?
+                .parse()
+                .map_err(|_| format!("Invalid range start in {}", line))?;
+            let end: isize = split
+                .next()
+                .ok_or_else(|| "Missing end of range".to_string())?
+                .parse()
+                .map_err(|_| format!("Invalid range end in {}", line))?;
+            if start > end {
+                return Err(format!("Invalid range: start > end ({}- {})", start, end));
+            }
+            Ok((start, end))
         })
         .collect();
-    Ok(RulesAndUpdates { before, pages })
+    let ranges = ranges?;
+
+    let values: Result<Vec<isize>, String> = values_str
+        .lines()
+        .map(|line| {
+            line.trim()
+                .parse()
+                .map_err(|_| format!("Invalid value {}", line))
+        })
+        .collect();
+    let values = values?;
+
+    Ok(RangeData { ranges, values })
+}
+
+pub fn read_range_data(day: &str) -> std::io::Result<RangeData> {
+    let content = read_file_as_string(day)?;
+    parse_range_data(&content).map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_range_data() {
+        let input = "1-4\n7-11\n\n2\n9";
+        let expected = RangeData {
+            ranges: vec![(1, 4), (7, 11)],
+            values: vec![2, 9],
+        };
+        assert_eq!(parse_range_data(input).unwrap(), expected);
+    }
+
+    #[test]
+    fn test_parse_range_data_with_extra_newline() {
+        let input = "1-4\n7-11\n\n\n2\n9";
+        let expected = RangeData {
+            ranges: vec![(1, 4), (7, 11)],
+            values: vec![2, 9],
+        };
+        assert_eq!(parse_range_data(input).unwrap(), expected);
+    }
+
+    #[test]
+    fn test_parse_invalid_range() {
+        let input = "5-4\n\n1";
+        assert!(parse_range_data(input).is_err());
+    }
 }

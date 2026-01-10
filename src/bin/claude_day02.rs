@@ -49,7 +49,11 @@ fn sum_invalid_ids_in_range_part2(start: u64, end: u64) -> u64 {
     let mut invalid_ids = HashSet::new();
 
     // Determine the range of digit counts to consider
-    let min_digits = if start == 0 { 1 } else { start.to_string().len() };
+    let min_digits = if start == 0 {
+        1
+    } else {
+        start.to_string().len()
+    };
     let max_digits = end.to_string().len();
 
     // Try all possible total digit counts
@@ -355,7 +359,10 @@ mod tests {
     #[test]
     fn test_part2_single_range_9_digit_repetitions() {
         // 824824824 = "824" repeated 3 times
-        assert_eq!(sum_invalid_ids_in_range_part2(824824824, 824824824), 824824824);
+        assert_eq!(
+            sum_invalid_ids_in_range_part2(824824824, 824824824),
+            824824824
+        );
         // 824824821-824824827 contains 824824824
         assert_eq!(
             sum_invalid_ids_in_range_part2(824824821, 824824827),
@@ -382,7 +389,28 @@ mod tests {
         // 1111 can be seen as "1" x4 or "11" x2, but should only be counted once
         assert_eq!(sum_invalid_ids_in_range_part2(1111, 1111), 1111);
         // Range with multiple overlapping patterns
-        assert_eq!(sum_invalid_ids_in_range_part2(11, 1111), 11 + 22 + 33 + 44 + 55 + 66 + 77 + 88 + 99 + 111 + 222 + 333 + 444 + 555 + 666 + 777 + 888 + 999 + 1010 + 1111);
+        assert_eq!(
+            sum_invalid_ids_in_range_part2(11, 1111),
+            11 + 22
+                + 33
+                + 44
+                + 55
+                + 66
+                + 77
+                + 88
+                + 99
+                + 111
+                + 222
+                + 333
+                + 444
+                + 555
+                + 666
+                + 777
+                + 888
+                + 999
+                + 1010
+                + 1111
+        );
     }
 
     #[test]

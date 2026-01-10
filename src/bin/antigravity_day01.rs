@@ -9,7 +9,7 @@ fn main() -> std::io::Result<()> {
 /// Part 1: Count the number of times the dial is pointing at 0 after a rotation.
 ///
 /// The dial goes from 0 to 99, and starts at position 50, with wrapping.
-/// 
+///
 /// Inputs:
 ///   input: a vector of strings.  Each string is a rotation of the dial expressed
 ///          as a single character direction (L or R) followed by a number of clicks.
@@ -41,7 +41,7 @@ fn part1(inputs: &[String]) -> i32 {
 /// during a rotation.
 ///
 /// The dial goes from 0 to 99, and starts at position 50, with wrapping.
-/// 
+///
 /// Inputs:
 ///   input: a vector of strings.  Each string is a rotation of the dial expressed
 ///          as a single character direction (L or R) followed by a number of clicks.
@@ -54,12 +54,12 @@ fn part2(inputs: &[String]) -> i32 {
     for line in inputs {
         let direction = &line[0..1];
         let distance: i32 = line[1..].parse().unwrap();
-        
+
         // Count full rotations
         count += distance / 100;
-        
+
         let rem = distance % 100;
-        
+
         if direction == "L" {
             if position > 0 && rem >= position {
                 count += 1;
@@ -103,11 +103,7 @@ mod tests {
         // L50 -> 0 (count 1)
         // L1 -> 99
         // R1 -> 0 (count 2)
-        let input = vec![
-            "L50".to_string(),
-            "L1".to_string(),
-            "R1".to_string(),
-        ];
+        let input = vec!["L50".to_string(), "L1".to_string(), "R1".to_string()];
         assert_eq!(part1(&input), 2);
     }
 
@@ -132,10 +128,7 @@ mod tests {
         // Start at 50.
         // R10 -> 60
         // L20 -> 40
-        let input = vec![
-            "R10".to_string(),
-            "L20".to_string(),
-        ];
+        let input = vec!["R10".to_string(), "L20".to_string()];
         assert_eq!(part1(&input), 0);
     }
 
@@ -167,10 +160,7 @@ mod tests {
     fn test_part2_start_zero_left() {
         // Start 50. L50 -> 0 (count 1).
         // L100 -> 0 (count 1).
-        let input = vec![
-            "L50".to_string(),
-            "L100".to_string(),
-        ];
+        let input = vec!["L50".to_string(), "L100".to_string()];
         assert_eq!(part2(&input), 2);
     }
 
@@ -178,10 +168,7 @@ mod tests {
     fn test_part2_start_zero_right() {
         // Start 50. R50 -> 0 (count 1).
         // R100 -> 0 (count 1).
-        let input = vec![
-            "R50".to_string(),
-            "R100".to_string(),
-        ];
+        let input = vec!["R50".to_string(), "R100".to_string()];
         assert_eq!(part2(&input), 2);
     }
 }

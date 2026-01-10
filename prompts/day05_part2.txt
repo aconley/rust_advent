@@ -1,0 +1,24 @@
+Continuing the problem from @prompts/day05_part1.txt, you should now
+take the Range data and form the sum of the lengths of all the intervals
+in input.ranges if they are all merged.
+
+For example, given the following ranges:
+
+3-5, 10-14, 16-20, 12-18
+
+If they were all merged, the resulting ranges would be 3-5 and 10-20,
+so the result would be 3 + 11 = 14.
+
+Note that the input also containes a field values that you should ignore.
+
+Please implement the rust function part2 to solve this problem in the specified
+file.  
+
+* You should pay particular attention to clarity and efficiency.
+* You should not need to consider any other files other than lib.rs and the 
+   file you are implementing in.
+* Please also include tests.  These should include at least the above example,
+  but you should also create other tests as you see appopriate.
+* You do not need to touch the function part1, nor run main.
+
+

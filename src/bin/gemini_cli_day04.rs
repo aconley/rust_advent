@@ -88,7 +88,9 @@ fn has_fewer_neighbors_than<R: AsRef<[u8]>>(
     // We can also just use the row length of the current row or 0.
     // But since the grid is rectangular, let's just grab the length of the first row.
     // If rows is 0, the loop below won't run anyway (nr/nc checks).
-    if rows == 0 { return true; }
+    if rows == 0 {
+        return true;
+    }
     let cols = grid[0].as_ref().len();
 
     let mut count = 0;
@@ -122,11 +124,7 @@ mod tests {
 
     #[test]
     fn test_part1_small_example() {
-        let input = vec![
-            "..@".to_string(),
-            ".@.".to_string(),
-            ".@@".to_string(),
-        ];
+        let input = vec!["..@".to_string(), ".@.".to_string(), ".@@".to_string()];
         assert_eq!(part1(&input), 4);
     }
 
@@ -176,11 +174,7 @@ mod tests {
         // Edges (non-corner) have 5 neighbors (>= 4, fail)
         // Corners have 3 neighbors (< 4, pass)
         // Should return 4.
-        let input = vec![
-            "@@@".to_string(),
-            "@@@".to_string(),
-            "@@@".to_string(),
-        ];
+        let input = vec!["@@@".to_string(), "@@@".to_string(), "@@@".to_string()];
         assert_eq!(part1(&input), 4);
     }
 
@@ -191,20 +185,13 @@ mod tests {
         // .@.
         // Center has exactly 4 neighbors (up, down, left, right). Should NOT count.
         // Outer ones have 1 neighbor each. Should count.
-        let input = vec![
-            ".@.".to_string(),
-            "@.@".to_string(),
-            ".@.".to_string(),
-        ];
+        let input = vec![".@.".to_string(), "@.@".to_string(), ".@.".to_string()];
         assert_eq!(part1(&input), 4);
     }
 
     #[test]
     fn test_no_objects() {
-        let input = vec![
-            "...".to_string(),
-            "...".to_string(),
-        ];
+        let input = vec!["...".to_string(), "...".to_string()];
         assert_eq!(part1(&input), 0);
     }
 
@@ -269,11 +256,7 @@ mod tests {
         // Step 2: 4 edges removed.
         // Step 3: 1 center removed.
         // Total 9.
-        let input = vec![
-            "@@@".to_string(),
-            "@@@".to_string(),
-            "@@@".to_string(),
-        ];
+        let input = vec!["@@@".to_string(), "@@@".to_string(), "@@@".to_string()];
         assert_eq!(part2(&input), 9);
     }
 
@@ -283,4 +266,3 @@ mod tests {
         assert_eq!(part2(&input), 1);
     }
 }
- 

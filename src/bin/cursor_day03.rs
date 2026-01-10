@@ -53,35 +53,33 @@ pub fn part2(grid: &Vec<Vec<u8>>) -> u64 {
                 // Can't form a 12-digit number, return 0
                 return 0;
             }
-            
+
             if row.len() == 12 {
                 // Use all digits
                 return digits_to_number(row);
             }
-            
+
             // Greedy algorithm: remove (len - 12) digits to maximize result
             // Use a stack to build the result
             let mut stack: Vec<u8> = Vec::new();
             let to_remove = row.len() - 12;
             let mut removed = 0;
-            
+
             for &digit in row.iter() {
                 // Remove from stack while we can still remove digits and
                 // the current digit is larger than the top of the stack
-                while removed < to_remove 
-                    && !stack.is_empty() 
-                    && digit > *stack.last().unwrap() {
+                while removed < to_remove && !stack.is_empty() && digit > *stack.last().unwrap() {
                     stack.pop();
                     removed += 1;
                 }
                 stack.push(digit);
             }
-            
+
             // If we haven't removed enough, remove from the end
             while stack.len() > 12 {
                 stack.pop();
             }
-            
+
             digits_to_number(&stack)
         })
         .sum()
@@ -150,10 +148,7 @@ mod tests {
 
     #[test]
     fn test_multiple_rows_simple() {
-        let grid = vec![
-            vec![1, 2],
-            vec![3, 4],
-        ];
+        let grid = vec![vec![1, 2], vec![3, 4]];
         // Row 1: 12
         // Row 2: 34
         // Sum: 12 + 34 = 46
@@ -230,8 +225,10 @@ mod tests {
     #[test]
     fn test_digits_to_number() {
         assert_eq!(digits_to_number(&[1, 2, 3]), 123);
-        assert_eq!(digits_to_number(&[9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1]), 987654321111);
+        assert_eq!(
+            digits_to_number(&[9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1]),
+            987654321111
+        );
         assert_eq!(digits_to_number(&[0, 1, 2]), 12); // Leading zero is preserved as a digit
     }
 }
-

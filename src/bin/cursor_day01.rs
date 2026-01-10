@@ -76,28 +76,24 @@ fn part2(inputs: &[String]) -> i32 {
                 // We need to find all integers n such that this inequality holds
                 let lower_bound = start - distance;
                 let upper_bound = start - 1;
-                
+
                 // Find the range of n values
                 // min_n = ceil(lower_bound / 100), max_n = floor(upper_bound / 100)
                 // In Rust, integer division truncates toward zero, so:
                 //   For non-negative: x/100 is floor
                 //   For negative: x/100 truncates toward zero, but we need floor, so use (x - 99) / 100
                 let min_n = if lower_bound >= 0 {
-                    (lower_bound + 99) / 100  // ceil for non-negative
+                    (lower_bound + 99) / 100 // ceil for non-negative
                 } else {
-                    (lower_bound) / 100  // for negative, truncation toward zero is actually ceil
+                    (lower_bound) / 100 // for negative, truncation toward zero is actually ceil
                 };
                 let max_n = if upper_bound >= 0 {
-                    upper_bound / 100  // floor for non-negative (truncation toward zero)
+                    upper_bound / 100 // floor for non-negative (truncation toward zero)
                 } else {
-                    (upper_bound - 99) / 100  // floor for negative
+                    (upper_bound - 99) / 100 // floor for negative
                 };
-                
-                let zeros_during = if max_n >= min_n {
-                    max_n - min_n + 1
-                } else {
-                    0
-                };
+
+                let zeros_during = if max_n >= min_n { max_n - min_n + 1 } else { 0 };
                 count += zeros_during;
 
                 position = (position - distance).rem_euclid(100);
@@ -109,11 +105,7 @@ fn part2(inputs: &[String]) -> i32 {
                 // Rearranging: start + 1 <= 100*n <= start + distance
                 let min_n = (start + 1 + 99) / 100; // ceil((start + 1) / 100)
                 let max_n = (start + distance) / 100; // floor((start + distance) / 100)
-                let zeros_during = if max_n >= min_n {
-                    max_n - min_n + 1
-                } else {
-                    0
-                };
+                let zeros_during = if max_n >= min_n { max_n - min_n + 1 } else { 0 };
                 count += zeros_during;
 
                 position = (position + distance).rem_euclid(100);
