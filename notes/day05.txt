@@ -11,6 +11,12 @@ Part 1:
      of code style'. After specifying, improved and correctly stated complexity.
 Added problem size statement to prompt.
   Gemini 3 CLI: Very similar to claude.
+  Cursor: similar: initial impl was O(NM), when asked improved.  But I caught
+     it looking at other solutions, so I probably need to more agressively hide
+     them.
+Moved all the previous impls out of the directory.
+  Antigravity: Gemini 3 Flash.  Solved with the better solution initially.
+     Made some small clarity improvements when asked to review.
 
 Part 2:
   Gemini CLI: Straightforward solution, but duplicated merge.
@@ -26,3 +32,13 @@ Part 2:
     efficient it discussed using rayon, decided that was overly complex and
     that it should just avoid allocating the merge.  It didn't ask before doing
     it though.
+  Cursor: looked at outputs of other versions, went straight to the
+    good solution.  I had moved the files, but clearly it still had them
+    in context since it said it was considering other impls.
+  Antigravity3: Gemini 3 Flash.  Similar to others, solution constructed
+    full merge.  I did tell it to refactor into a helper, that may have
+    distracted it.  Improved when asked after suggesting some other improvements.
+
+  Eval: hard to say, since apparently there was some consideration of other solutions,
+  at least by cursor.  Gemini3 and Claude had very similar solutions, cursor
+  probably can't be evaluated.  Gemini 3 probably did better than 2.5.
