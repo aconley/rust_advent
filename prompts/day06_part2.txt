@@ -1,0 +1,48 @@
+This is a variation of the problem in @prompts/day01_part1 that differs
+in how the numbers are interpreted.
+
+Now the numbers are not written in standard notation. Each numeric value now
+consists of individual base 10 digits from multiple numbers.  The numbers are
+written top to bottom, and right to left, and the whitespace is significant.
+
+Each row of numeric values is now seperated by a single column of whitespace,
+but now the line '12  35 12 ' might parse into '12 ', ' 35' and '12 ',
+depending on details we consider next. So, for example, consider the input
+
+'64  113'
+'23  422'
+'431 101' 
+'720  5 '
+'*   +  '
+
+This is now two problems.  The first problem is: ('64 ', '23 ', '431', '720', *)
+and the second is ('113', '422', '101', ' 5 ', +).  Moreover, these are parsed
+into the numbers: 
+
+* First Problem: ('64 ', '23 ', '431', '720', *) -> 10 * 4332 * 6247 = 270620040
+* Second problem: ('113', '422', '101', ' 5 ', +) -> 321 + 1205 + 141 = 1667
+
+where the values are formed by reading down the columns and right to left.
+
+Other than this difference, the problem is as before: you must perform the
+specified operation between the numbers represented by the first N lines.
+Note that the position of the operator within the column may be useful because
+it is always in the leftmost column of any problem instance.
+
+As an example:
+
+'123 328  51 64 '
+' 45 64  387 23 '
+'  6 98  215 314'
+'*   +   *   +  '
+
+Is interpreted as the 4 problems (from the right):
+1. (4 431 623 +) -> 4 + 431 + 623 = 1058
+2. (175 581 32 *) -> 175 * 581 * 32 = 3253600
+3. (8 248 369 +)-= -> 8 + 248 + 369 = 625
+4. (356 24 1 *) 356 * 24 * 1 = 8544 
+
+Please implement the function part2 in rust in the specified file to do this
+computation.  As before, include unit tests that go beyond the above examples.
+Again, you may wish to consider changing the return signature of the function
+to handle errors.

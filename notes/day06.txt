@@ -1,0 +1,27 @@
+From now on I'll be removing all the answers from other agents from the
+folder, since I caught cursor reading them.
+
+The first part of the problem is pretty simple, part2 has some ambiguities
+around parsing.  Claude was able to ask follow up questions to unstick itself.
+I then added these to the prompt, so I couldn't test if Gemini/Antigravity
+would've done as good a job deciding what to do.
+
+Cursor:
+  Part1: Solved quite straighforwardly, reasonable tests.
+  Part2: Simply couldn't solve.  Got caught in parse ambiguities
+
+Claude:
+  Part1: Simple, straightforward.
+  Part2: Asked great follow up questions with examples and suggested solutions
+         to resolve ambiguity, then used those to solve problem.
+
+Gemini:
+  Part1: Simple, straightforward.
+  Part2: Had the advantage of the disambiguation from Claude, but solved
+         problem well.  Didn't want to be forced into only planning -- it
+         did stop before implementing, but wrote the tests that promptly failed
+         first before that.
+
+Antigravity: skipped.
+
+I really should've saved the prompt from Claude to see what Gemini would've done.

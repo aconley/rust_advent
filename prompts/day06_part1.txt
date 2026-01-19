@@ -1,0 +1,50 @@
+Part 1:
+
+You will be given a vector of Strings.  Each string represents a single
+line in the input.  The first N lines are each M whitespace separated int values
+(i32 is sufficient).  The last line is M whitespace separated operators, where
+an operator may either be addition ('+') or multiplication ('*').  You do
+not know M or N ahead of time, but if any line does not have M entries it
+is an error, and if N < 2 it is also an error.
+
+The mth element of each line represents a single problem.  For example,
+given the input:
+
+5 3 7 2
+2 1 4 1
+6 5 1 0
+* + * *
+
+The four problems are (5 2 6 *), (3 1 5 +), (7 4 1 *), (2 1 0 *).  Your task
+is to
+
+1. Convert the inputs into some convenient representation, one per problem.
+2. Perform the problem by applying the operator between all numbers in that
+    problem (example: (5 2 6 *) -> 5 * 2 * 6 = 60).
+3. Sum all the results of all problems.
+
+Both M and N may be quite large.
+
+Another example input is:
+
+123 328  51 64 
+ 45 64  387 23 
+  6 98  215 314
+*   +   *   +  
+
+Which contains 4 problems.  The problems and their solutions are:
+
+123 * 45 * 6 = 33210
+328 + 64 + 98 = 490
+51 * 387 * 215 = 4243455
+64 + 23 + 314 = 401
+
+So the final value that should be returned is
+33210 + 490 + 4243455 + 401 = 4277556.
+
+You should implement the function part1 in the specified file to do this
+calculation in rust.  Make sure to include tests, which should go beyond the
+examples provided above to cover corner cases and errors.
+
+You may wish to consider changing the return signature of the function
+to handle errors.
