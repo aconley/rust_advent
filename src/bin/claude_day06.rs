@@ -11,7 +11,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn part1(input: &[String]) -> Result<i64, String> {
     // Need at least 3 lines (2 data rows + 1 operator row)
     if input.len() < 3 {
-        return Err(format!("Not enough lines: need at least 3, got {}", input.len()));
+        return Err(format!(
+            "Not enough lines: need at least 3, got {}",
+            input.len()
+        ));
     }
 
     // Split into data lines and operator line
@@ -21,10 +24,8 @@ fn part1(input: &[String]) -> Result<i64, String> {
     // Parse data lines into numbers
     let mut data: Vec<Vec<i32>> = Vec::new();
     for line in data_lines {
-        let numbers: Result<Vec<i32>, _> = line
-            .split_whitespace()
-            .map(|s| s.parse::<i32>())
-            .collect();
+        let numbers: Result<Vec<i32>, _> =
+            line.split_whitespace().map(|s| s.parse::<i32>()).collect();
         data.push(numbers.map_err(|e| format!("Invalid number: {}", e))?);
     }
 
@@ -32,19 +33,30 @@ fn part1(input: &[String]) -> Result<i64, String> {
     let m = data[0].len();
     for row in &data {
         if row.len() != m {
-            return Err(format!("Inconsistent number of columns: expected {}, got {}", m, row.len()));
+            return Err(format!(
+                "Inconsistent number of columns: expected {}, got {}",
+                m,
+                row.len()
+            ));
         }
     }
 
     // Parse operators
     let mut operators: Vec<char> = Vec::new();
     for s in operator_line.split_whitespace() {
-        let ch = s.chars().next().ok_or_else(|| "Empty operator".to_string())?;
+        let ch = s
+            .chars()
+            .next()
+            .ok_or_else(|| "Empty operator".to_string())?;
         operators.push(ch);
     }
 
     if operators.len() != m {
-        return Err(format!("Number of operators ({}) doesn't match number of columns ({})", operators.len(), m));
+        return Err(format!(
+            "Number of operators ({}) doesn't match number of columns ({})",
+            operators.len(),
+            m
+        ));
     }
 
     // Process each column (problem)
@@ -78,7 +90,10 @@ fn part1(input: &[String]) -> Result<i64, String> {
 fn part2(input: &[String]) -> Result<i64, String> {
     // Validate input - need at least 3 lines (2 data rows + 1 operator row)
     if input.len() < 3 {
-        return Err(format!("Not enough lines: need at least 3, got {}", input.len()));
+        return Err(format!(
+            "Not enough lines: need at least 3, got {}",
+            input.len()
+        ));
     }
 
     // Split into data lines and operator line
@@ -132,14 +147,16 @@ fn part2(input: &[String]) -> Result<i64, String> {
             let mut digits = String::new();
             for row in &padded_data {
                 if let Some(ch) = row.chars().nth(col_idx)
-                    && ch.is_ascii_digit() {
+                    && ch.is_ascii_digit()
+                {
                     digits.push(ch);
                 }
             }
 
             // If we found any digits, parse as a number
             if !digits.is_empty() {
-                let num = digits.parse::<i64>()
+                let num = digits
+                    .parse::<i64>()
                     .map_err(|e| format!("Failed to parse number '{}': {}", digits, e))?;
                 numbers.push(num);
             }
@@ -198,11 +215,7 @@ mod tests {
     #[test]
     fn test_part1_minimum_rows() {
         // Test with exactly 3 lines (minimum: 2 data rows + 1 operator row)
-        let input = vec![
-            "10 20".to_string(),
-            "5 3".to_string(),
-            "+ *".to_string(),
-        ];
+        let input = vec!["10 20".to_string(), "5 3".to_string(), "+ *".to_string()];
         // Column 0: 10 + 5 = 15
         // Column 1: 20 * 3 = 60
         // Total: 15 + 60 = 75
@@ -267,11 +280,7 @@ mod tests {
 
     #[test]
     fn test_part1_multiplication_with_zero() {
-        let input = vec![
-            "5 10".to_string(),
-            "0 2".to_string(),
-            "* *".to_string(),
-        ];
+        let input = vec!["5 10".to_string(), "0 2".to_string(), "* *".to_string()];
         // Column 0: 5 * 0 = 0
         // Column 1: 10 * 2 = 20
         // Total: 0 + 20 = 20
@@ -280,10 +289,7 @@ mod tests {
 
     #[test]
     fn test_part1_too_few_lines() {
-        let input = vec![
-            "1 2".to_string(),
-            "+ *".to_string(),
-        ];
+        let input = vec!["1 2".to_string(), "+ *".to_string()];
         let result = part1(&input);
         assert!(result.is_err());
         assert!(result.unwrap_err().contains("Not enough lines"));
@@ -293,12 +299,16 @@ mod tests {
     fn test_part1_inconsistent_columns() {
         let input = vec![
             "1 2 3".to_string(),
-            "4 5".to_string(),  // Missing one column
+            "4 5".to_string(), // Missing one column
             "+ * *".to_string(),
         ];
         let result = part1(&input);
         assert!(result.is_err());
-        assert!(result.unwrap_err().contains("Inconsistent number of columns"));
+        assert!(
+            result
+                .unwrap_err()
+                .contains("Inconsistent number of columns")
+        );
     }
 
     #[test]
@@ -306,7 +316,7 @@ mod tests {
         let input = vec![
             "1 2 3".to_string(),
             "4 5 6".to_string(),
-            "+ *".to_string(),  // Only 2 operators for 3 columns
+            "+ *".to_string(), // Only 2 operators for 3 columns
         ];
         let result = part1(&input);
         assert!(result.is_err());
@@ -330,7 +340,7 @@ mod tests {
         let input = vec![
             "1 2 3".to_string(),
             "4 5 6".to_string(),
-            "+ - *".to_string(),  // '-' is not a valid operator
+            "+ - *".to_string(), // '-' is not a valid operator
         ];
         let result = part1(&input);
         assert!(result.is_err());
@@ -507,11 +517,7 @@ mod tests {
 
     #[test]
     fn test_part2_simple_single_problem() {
-        let input = vec![
-            "123".to_string(),
-            "456".to_string(),
-            "+".to_string(),
-        ];
+        let input = vec!["123".to_string(), "456".to_string(), "+".to_string()];
         // Single problem with operator at position 0
         // Columns 0-2 (assuming it extends to end of string)
         // Col 2: '3', '6' -> "36"
@@ -557,11 +563,7 @@ mod tests {
 
     #[test]
     fn test_part2_sparse_columns() {
-        let input = vec![
-            "1  2".to_string(),
-            "3  4".to_string(),
-            "+  *".to_string(),
-        ];
+        let input = vec!["1  2".to_string(), "3  4".to_string(), "+  *".to_string()];
         // Some columns have no digits (whitespace only)
         assert!(part2(&input).is_ok());
     }
@@ -579,10 +581,7 @@ mod tests {
 
     #[test]
     fn test_part2_too_few_lines() {
-        let input = vec![
-            "123".to_string(),
-            "+".to_string(),
-        ];
+        let input = vec!["123".to_string(), "+".to_string()];
         let result = part2(&input);
         assert!(result.is_err());
         assert!(result.unwrap_err().contains("Not enough lines"));
@@ -593,7 +592,7 @@ mod tests {
         let input = vec![
             "123".to_string(),
             "456".to_string(),
-            "   ".to_string(),  // Only whitespace
+            "   ".to_string(), // Only whitespace
         ];
         let result = part2(&input);
         assert!(result.is_err());
@@ -605,7 +604,7 @@ mod tests {
         let input = vec![
             "123".to_string(),
             "456".to_string(),
-            "-".to_string(),  // Invalid operator
+            "-".to_string(), // Invalid operator
         ];
         let result = part2(&input);
         assert!(result.is_err());

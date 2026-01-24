@@ -2,7 +2,7 @@ use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let inputs = rust_advent::read_file_as_lines("06")?;
-    
+
     match part1(&inputs) {
         Ok(result) => println!("Part 1: {}", result),
         Err(e) => eprintln!("Part 1 Error: {}", e),
@@ -23,7 +23,9 @@ fn part1(input: &[String]) -> Result<i64, String> {
     // N lines of numbers, 1 line of operators. N >= 3.
     // So minimum 4 lines.
     if input.len() < 4 {
-        return Err("Input must have at least 3 lines of numbers and 1 line of operators".to_string());
+        return Err(
+            "Input must have at least 3 lines of numbers and 1 line of operators".to_string(),
+        );
     }
 
     let operator_line = &input[input.len() - 1];
@@ -32,35 +34,46 @@ fn part1(input: &[String]) -> Result<i64, String> {
     // Parse operators first to determine M and operations
     let operators: Vec<&str> = operator_line.split_whitespace().collect();
     let m = operators.len();
-    
+
     if m == 0 {
-         return Err("Operator line must contain at least one operator".to_string());
+        return Err("Operator line must contain at least one operator".to_string());
     }
 
     // Initialize accumulators with the values from the first line of numbers
     let first_line_tokens: Vec<&str> = number_lines[0].split_whitespace().collect();
     if first_line_tokens.len() != m {
-         return Err(format!("Line 1 has {} numbers, expected {}", first_line_tokens.len(), m));
+        return Err(format!(
+            "Line 1 has {} numbers, expected {}",
+            first_line_tokens.len(),
+            m
+        ));
     }
-    
+
     let mut accumulators: Vec<i64> = Vec::with_capacity(m);
     for (_, token) in first_line_tokens.iter().enumerate() {
-         let num = token.parse::<i64>()
+        let num = token
+            .parse::<i64>()
             .map_err(|_| format!("Invalid number '{}' at line 1", token))?;
-         accumulators.push(num);
+        accumulators.push(num);
     }
 
     // Process remaining lines
     for (line_idx, line) in number_lines.iter().enumerate().skip(1) {
         let tokens: Vec<&str> = line.split_whitespace().collect();
         if tokens.len() != m {
-            return Err(format!("Line {} has {} numbers, expected {}", line_idx + 1, tokens.len(), m));
+            return Err(format!(
+                "Line {} has {} numbers, expected {}",
+                line_idx + 1,
+                tokens.len(),
+                m
+            ));
         }
 
         for (col_idx, token) in tokens.iter().enumerate() {
-            let num = token.parse::<i64>()
+            let num = token
+                .parse::<i64>()
                 .map_err(|_| format!("Invalid number '{}' at line {}", token, line_idx + 1))?;
-            
+
             let op = operators[col_idx];
             match op {
                 "+" => accumulators[col_idx] += num,
@@ -81,7 +94,8 @@ fn part2(input: &[String]) -> i64 {
 
     // 2. Pad Lines
     let max_len = input.iter().map(|s| s.len()).max().unwrap_or(0);
-    let padded_input: Vec<Vec<char>> = input.iter()
+    let padded_input: Vec<Vec<char>> = input
+        .iter()
         .map(|line| {
             let mut chars: Vec<char> = line.chars().collect();
             chars.resize(max_len, ' ');
@@ -91,7 +105,7 @@ fn part2(input: &[String]) -> i64 {
 
     let num_rows = padded_input.len() - 1;
     let operator_row = &padded_input[padded_input.len() - 1];
-    
+
     // 3. Find Problems (Operators)
     let mut problem_starts = Vec::new();
     for (idx, &ch) in operator_row.iter().enumerate() {
@@ -116,19 +130,19 @@ fn part2(input: &[String]) -> i64 {
         // Let's check if there are overlapping problems?
         // Prompt says "Each row of numeric values is now seperated by a single column of whitespace".
         // So the blocks are distinct.
-        
+
         let mut end_col = start_col;
         while end_col < max_len {
             // Check if column is separator
             let is_separator = (0..padded_input.len()).all(|r| padded_input[r][end_col] == ' ');
             if is_separator {
-                 // But wait, the operator itself is at start_col.
-                 // If start_col was space, we wouldn't be here.
-                 // So we check from start_col + 1?
-                 // No, loop condition covers it.
-                 break;
+                // But wait, the operator itself is at start_col.
+                // If start_col was space, we wouldn't be here.
+                // So we check from start_col + 1?
+                // No, loop condition covers it.
+                break;
             }
-            
+
             // Also, we might just hit another operator if the spacing is tight?
             // "separated by a single column of whitespace". This implies at least one space column between blocks.
             // So we can safely scan until we hit a space column or end of line.
@@ -139,7 +153,7 @@ fn part2(input: &[String]) -> i64 {
         // 5. Extract Numbers (Right to Left)
         // Range is [start_col, end_col)
         let mut numbers = Vec::new();
-        
+
         for col in (start_col..end_col).rev() {
             // Build number string from rows 0 to num_rows-1
             let mut num_str = String::new();
@@ -149,7 +163,7 @@ fn part2(input: &[String]) -> i64 {
                     num_str.push(ch);
                 }
             }
-            
+
             if !num_str.is_empty() {
                 let num = num_str.parse::<i64>().expect("Failed to parse number");
                 numbers.push(num);
@@ -203,11 +217,7 @@ mod tests {
 
     #[test]
     fn test_error_too_few_lines() {
-        let input = vec![
-            "1 2".to_string(),
-            "3 4".to_string(),
-            "+ *".to_string(),
-        ];
+        let input = vec!["1 2".to_string(), "3 4".to_string(), "+ *".to_string()];
         assert!(part1(&input).is_err());
     }
 
@@ -226,7 +236,7 @@ mod tests {
     fn test_error_inconsistent_operators() {
         let input = vec![
             "1 2".to_string(),
-            "3 4".to_string(), 
+            "3 4".to_string(),
             "6 7".to_string(),
             "+".to_string(),
         ];
@@ -235,9 +245,9 @@ mod tests {
 
     #[test]
     fn test_error_invalid_number() {
-         let input = vec![
+        let input = vec![
             "1 a".to_string(),
-            "3 4".to_string(), 
+            "3 4".to_string(),
             "6 7".to_string(),
             "+ *".to_string(),
         ];
@@ -246,9 +256,9 @@ mod tests {
 
     #[test]
     fn test_error_invalid_operator() {
-         let input = vec![
-            "1 2".to_string(), 
-            "3 4".to_string(), 
+        let input = vec![
+            "1 2".to_string(),
+            "3 4".to_string(),
             "6 7".to_string(),
             "+ /".to_string(),
         ];

@@ -1,0 +1,110 @@
+In this problem we will be simulating beam splitters.
+
+You will be given a grid of positions represented as a list of strings.
+Each string is one row in the grid, you may assume they are the same
+length.  The grid consists of 3 characters:
+
+- '.' representing empty space.
+- 'S' representing the start position.  There can only be one of these,
+      and it will always be in the first (top) row.
+- '^' representing a beam splitter.
+
+The beam is emitted from the S and always moves downward.  When it strikes
+a beam splitter, it splits into two new beams on either side of the splitter
+that continue downwards.  If we represent a beam as a '|' (which does not
+appear in the input).  Thus, for example, if we had the grid
+
+..S..
+.....
+..^..
+.....
+
+Then the resulting beam pattern would be:
+
+..S..
+..|..
+.|^|.
+.|.|.
+
+Where the beam has come down from the S, split on the beam splitter (^),
+and then continued down without encountering anything else.
+
+The task is to count the number of times the beam is split.  In the
+above example, the answer is once, since.
+
+For a larger example, given the grid
+
+...S...
+.......
+...^...
+..^...^
+
+then the resulting beam pattern is
+
+...S...
+...|...
+..|^|..
+.|^||.^
+
+and the answer would be 2, since the beam is split twice.  Note that the
+beam splitter in the lower right corner never encounters a beam.
+
+For the final example, consider:
+
+.......S.......
+...............
+.......^.......
+...............
+......^.^......
+...............
+.....^.^.^.....
+...............
+....^.^...^....
+...............
+...^.^...^.^...
+...............
+..^...^.....^..
+...............
+.^.^.^.^.^...^.
+...............
+
+The resulting pattern is 
+
+.......S.......
+.......|.......
+......|^|......
+......|.|......
+.....|^|^|.....
+.....|.|.|.....
+....|^|^|^|....
+....|.|.|.|....
+...|^|^|||^|...
+...|.|.|||.|...
+..|^|^|||^|^|..
+..|.|.|||.|.|..
+.|^|||^||.||^|.
+.|.|||.||.||.|.
+|^|^|^|^|^|||^|
+|.|.|.|.|.|||.|
+
+which involves 21 splits.  Note that in some cases a beam is created
+from splitters on both sides:
+
+..S..
+..^..
+.^.^.
+
+..S..
+.|^|.
+|^|^|
+
+this still only counts as one beam; here the answer would be 3.
+
+Your task is to complete the implementation of the function part1 in rust in
+the specified file to compute the number of beam splits.  You should
+prioritize clarity, but should also consider efficiency, especially when
+it does not over-complicate the code, as the actual inputs may be significantly
+larger than the above examples.
+
+You should also include tests, and those tests should go beyond the above
+examples.

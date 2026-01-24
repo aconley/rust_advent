@@ -1,0 +1,39 @@
+Part 1:
+  Pretty straightforward.
+
+  * Antigravity (Gemini3 Flash)
+      Solved the first problem well, but I think it could have used a more
+      efficient representation than HashSet<int>, a simple list of the values
+      could by run in order.  The tests didn't go very far beyond the examples.
+  * Gemini CLI
+      Very similar to Antigravity.
+  * Claude
+      Similar solution to Gemini, significantly better tests.  When
+      asked to make more efficient, it reduced allocation, and also
+      came up with a version optimized for bitmasking and wrote a benchmark.
+  * Cursor
+      Strange solutions, less efficient.  But did work, including decent tests.
+      Was storing a lot of intermediate state.
+
+Part 2:
+  Also pretty straightforward.
+
+  * Antigravity (Gemini3 Flash)
+      Simple dynamic solution.  It was allocating a new row for each value,
+      I asked it to reduce the allocs and it did.  Similar test behavior.
+  * Gemini CLI
+      Very similar to Antigravity.
+  * Claude
+      Much more coplicated solution of a hash set of vecs, low efficiency.
+      When asked to optimize used the same bitmasking, but didn't see it's
+      overall approach was poor.
+  * Cursor
+      Similar to part 1, strange solutions, less efficient.  Dynamic, but kept
+      all rows for some reason.  But did work, including decent tests.
+
+  Overall:
+    Gemini based: better solution than Claude, but tests not as good.
+    Claude: good tests, somewhat interesting bitmask optimization, but it
+      used a fairly clunky, inefficient approach to part 2.  Gemini's was
+      substantially better.
+    Cursor: not very good solutions, but decent tests.
