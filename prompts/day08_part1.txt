@@ -1,0 +1,67 @@
+You will be given a list of 3D points represented as x, y, z int32 coordinates.
+Your task is to
+
+1. Connect the n closest points, where n is a value provided as an argument.
+2. Count the size of the m largest resulting connected components in the graph,
+   and then return the product of those sizes, where m is also an argument.
+
+Starting with a small example:
+
+0,0,0
+2,2,2
+2,3,2
+
+where each line represents one of the points you will be given.
+
+If I were to ask you to connect n=1 points, the two closest points
+are (2, 2, 2) and (2, 3, 2).  If these are connected, there are two components,
+one containing only (0, 0, 0), and one containing both (2, 2, 2) and (2, 3, 2).
+
+- If m = 1, you would then return 2, since the largest component is of size 2.
+- If m = 2, you would return 1 * 2 = 2, since the two largest components are
+  of size 1 and 2.
+
+Using a larger example:
+
+162,817,812
+57,618,57
+906,360,560
+592,479,940
+352,342,300
+466,668,158
+542,29,236
+431,825,988
+739,650,466
+52,470,668
+216,146,977
+819,987,18
+117,168,530
+805,96,715
+346,949,466
+970,615,88
+941,993,340
+862,61,35
+984,92,344
+425,690,689
+
+If n = 2, you would first connect (162,817,812) and (425,690,689),
+then (162,817,812) and (431,825,988) so there would be one connected
+component of size 3 and 17 of size 1.   For n = 3 you would now also
+connect (906,360,560) and (805,96,715), so there would be one component of
+size 3, one of size 2, and 15 of size 1.  So, for this problem, the the
+result for different values of m are:
+
+- n = 3, m = 1 -> result = 3.
+- n = 3, m = 2 -> result = 2 * 3 = 6.
+
+Your task is to implement the function part1 in the specified file in rust
+to solve this problem.  You should emphasize clarity, but also consider
+efficiency as long as it does not significantly increase the complexity
+of the solution; the actual inputs may be considerably larger than the
+above examples.
+
+You should also include appropriate unit tests, which should go beyond just
+the examples provided above.
+
+
+
