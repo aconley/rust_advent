@@ -2,3 +2,4 @@
 Cargo.lock
 .claude
 .env-secrets
+.gemini

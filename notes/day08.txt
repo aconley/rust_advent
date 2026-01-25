@@ -1,0 +1,34 @@
+Part 1:
+  Codex: Solved the problem reasonably well using P^2 distances
+     and a union find algorithm without path compression.  Tests went slightly
+     beyond minimimal, but not much.
+  Claude: I tried the vscode plugin, not sure it's really an improvement over
+     the CLI.  It looks fancier, but is actually a bit less polished.
+     Spent a long time on the plan, seemed unclear whether to connect to
+     the n closest to each point or n closest over all combinations, even
+     though the examples should have made that clear.  So good that it asked if
+     it wasn't sure, but it should've been able to tell.  Tests better than
+     codex.
+  Gemini (3): Solved the problem in a similar fashion.  Didn't use a priority
+     heap, it just stored all P^2/2 and sorted.  Did include some optimizations
+     (partial sorting).  When asked about improving efficiency did discuss
+     Kd trees but also noticed they added a lot of complexity.  Had to be
+     explicitly prompted about the memory use to switch to a heap.  Tests
+     quite minimal, only the provided examples.
+
+Part 2:
+  Codex: Similar to part1.  When asked about improving the P^2, gave solutions
+     but noted they were pretty complex involving kd trees.
+  Claude: Solved part 2 cleanly.  Again, better tests.  When asked about
+     improving the P^2, suggested using rayon to parallelize and some
+     early termination heuristics, both implemented.
+  Gemini: Clean extension.  Tests still quite minimal.  Had to prompt a few
+     times to get decent tests.  When asked specifically about speeding up,
+     it also suggested early termination and rayon, and also radix sorting.
+     Needed comment clean up.  Rust analyzer had extra suggestions it didn't
+     see, but when asked to fix them it did.
+
+Overall: Solutions were pretty similar, mostly differentiated on test coverage.
+  Claude did by far the best, Gemini the worst.  Claude as usual was better
+  about asking clarifying questions, although in this case it was something
+  it should have been able to figure it out from the examples.
