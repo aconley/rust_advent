@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
   curl \
   build-essential \
   nodejs \
+  vim \
   && rm -rf /var/lib/apt/lists/*
 
 # Create vscode user with sudo privileges
@@ -68,7 +69,7 @@ ENV NPM_CONFIG_PREFIX=/usr/local/share/npm-global
 ENV PATH=$PATH:/usr/local/share/npm-global/bin
 
 # Install Claude Code and Gemini CLI
-RUN npm install -g @anthropic-ai/claude-code @google/gemini-cli
+RUN npm install -g @anthropic-ai/claude-code @google/gemini-cli @openai/codex
 
 # Set the default shell to fish
 ENV SHELL=/usr/bin/fish
