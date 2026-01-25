@@ -1,4 +1,3 @@
-
 fn main() -> std::io::Result<()> {
     let inputs = rust_advent::read_file_as_lines("07")?;
     println!("Part 1: {}", part1(&inputs));
@@ -12,12 +11,12 @@ fn part1(input: &[String]) -> u64 {
     }
 
     let cols = input[0].len();
-    
+
     // Use Vec<bool> for efficient tracking without hashing overhead
     // Double buffering to avoid allocation in the loop
     let mut beams = vec![false; cols];
     let mut next_beams = vec![false; cols];
-    
+
     let mut found_s = false;
     for (c, char) in input[0].chars().enumerate() {
         if char == 'S' {
@@ -26,7 +25,7 @@ fn part1(input: &[String]) -> u64 {
             break;
         }
     }
-    
+
     if !found_s {
         return 0;
     }
@@ -39,7 +38,9 @@ fn part1(input: &[String]) -> u64 {
         let mut active = false;
 
         for c in 0..cols {
-            if !beams[c] { continue; }
+            if !beams[c] {
+                continue;
+            }
             active = true;
 
             match row_bytes[c] {
@@ -51,13 +52,13 @@ fn part1(input: &[String]) -> u64 {
                     if c + 1 < cols {
                         next_beams[c + 1] = true;
                     }
-                },
+                }
                 _ => {
                     next_beams[c] = true;
                 }
             }
         }
-        
+
         if !active {
             break;
         }
@@ -73,11 +74,11 @@ fn part2(input: &[String]) -> u64 {
     }
 
     let cols = input[0].len();
-    
+
     // Double buffering for counts
     let mut counts: Vec<u64> = vec![0; cols];
     let mut next_counts: Vec<u64> = vec![0; cols];
-    
+
     // Initialize start position
     let mut found_s = false;
     for (c, char) in input[0].chars().enumerate() {
@@ -87,7 +88,7 @@ fn part2(input: &[String]) -> u64 {
             break;
         }
     }
-    
+
     if !found_s {
         return 0;
     }
@@ -99,9 +100,11 @@ fn part2(input: &[String]) -> u64 {
 
         for c in 0..cols {
             let count = counts[c];
-            if count == 0 { continue; }
+            if count == 0 {
+                continue;
+            }
             active = true;
-            
+
             match row_bytes[c] {
                 b'^' => {
                     // Split: goes to left and right in next row
@@ -111,14 +114,14 @@ fn part2(input: &[String]) -> u64 {
                     if c + 1 < cols {
                         next_counts[c + 1] += count;
                     }
-                },
+                }
                 _ => {
                     // Pass through: goes straight down
                     next_counts[c] += count;
                 }
             }
         }
-        
+
         // Optimization: if no beams active, stop
         if !active {
             break;
@@ -154,7 +157,7 @@ mod tests {
         ];
         assert_eq!(part1(&input), 2);
     }
-    
+
     #[test]
     fn test_part1_example_3_large() {
         let input = vec![

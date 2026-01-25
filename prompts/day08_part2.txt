@@ -1,0 +1,47 @@
+This is a modification of the problem in @prompts/day08_part1.txt,
+which you should solve by implementing the function part2 in the same
+input file.
+
+Now you need to continue connecting points (in the order of increasing
+edge length) until all of the points are connected.  You should then return
+the product of the x coordinates of the two endpoints of the final connection.
+
+So, for the initial small example:
+
+1,1,1
+2,3,4
+3,5,6
+
+you would first connect (2,3,4) to (3,5,6), since that is the shortest edge,
+then connect (1,1,1) to (2,3,4) because that is the second shortest edge.
+All points would now be connected, so you would return the product of the
+xs of those two endpoints: 1 * 2 = 2.
+
+For the larger example
+
+162,817,812
+57,618,57
+906,360,560
+592,479,940
+352,342,300
+466,668,158
+542,29,236
+431,825,988
+739,650,466
+52,470,668
+216,146,977
+819,987,18
+117,168,530
+805,96,715
+346,949,466
+970,615,88
+941,993,340
+862,61,35
+984,92,344
+425,690,689
+
+the final points you would connect to form one large connected component are
+(216,146,977) and (117,168,530), so you would return 216 * 117 = 25272.
+
+As before, please include unit tests for your implementation that go beyond
+the above examples.

@@ -50,26 +50,50 @@ pub fn read_int_pairs(day: &str) -> std::io::Result<(Vec<i32>, Vec<i32>)> {
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct Point {
-    x: i32,
-    y: i32,
-    z: i32,
+    pub x: i32,
+    pub y: i32,
+    pub z: i32,
 }
 
 pub fn read_points(day: &str) -> std::io::Result<Vec<Point>> {
     let reader = BufReader::new(File::open(get_input_path(day))?);
     let mut res = Vec::new();
-    for line in reader.lines() {
-        let parts = line?.split_whitespace().collect::<Vec<&str>>();
+    for (idx, line) in reader.lines().enumerate() {
+        let line = line?;
+        let parts = line
+            .split(',')
+            .map(|part| part.trim())
+            .filter(|part| !part.is_empty())
+            .collect::<Vec<&str>>();
         if parts.len() != 3 {
             return Err(std::io::Error::new(
                 std::io::ErrorKind::InvalidData,
-                "Invalid point",
+                format!(
+                    "Invalid point at line {}: expected 3 values separated by commas, got {} ({})",
+                    idx + 1,
+                    parts.len(),
+                    line
+                ),
             ));
         }
+        let parse_coord = |value: &str, label: &str| {
+            value.parse::<i32>().map_err(|err| {
+                std::io::Error::new(
+                    std::io::ErrorKind::InvalidData,
+                    format!(
+                        "Invalid point at line {}: {} value '{}' is not an i32 ({})",
+                        idx + 1,
+                        label,
+                        value,
+                        err
+                    ),
+                )
+            })
+        };
         res.push(Point {
-            x: parts[0].parse().expect("x is not an integer"),
-            y: parts[1].parse().expect("y is not an integer"),
-            z: parts[2].parse().expect("z is not an integer"),
+            x: parse_coord(parts[0], "x")?,
+            y: parse_coord(parts[1], "y")?,
+            z: parse_coord(parts[2], "z")?,
         });
     }
     Ok(res)
