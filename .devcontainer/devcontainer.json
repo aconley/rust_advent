@@ -10,7 +10,7 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "rust-analyzer.checkOnSave.command": "clippy",
+        "rust-analyzer.check.command": "clippy",
         "rust-analyzer.cargo.features": "all",
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "rust-lang.rust-analyzer"
