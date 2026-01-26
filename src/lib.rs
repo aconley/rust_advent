@@ -48,6 +48,55 @@ pub fn read_int_pairs(day: &str) -> std::io::Result<(Vec<i32>, Vec<i32>)> {
     Ok((v1, v2))
 }
 
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+pub struct Point2d {
+    pub x: i32,
+    pub y: i32,
+}
+
+pub fn read_points2d(day: &str) -> std::io::Result<Vec<Point2d>> {
+    let reader = BufReader::new(File::open(get_input_path(day))?);
+    let mut res = Vec::new();
+    for (idx, line) in reader.lines().enumerate() {
+        let line = line?;
+        let parts = line
+            .split(',')
+            .map(|part| part.trim())
+            .filter(|part| !part.is_empty())
+            .collect::<Vec<&str>>();
+        if parts.len() != 2 {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::InvalidData,
+                format!(
+                    "Invalid point at line {}: expected 2 values separated by commas, got {} ({})",
+                    idx + 1,
+                    parts.len(),
+                    line
+                ),
+            ));
+        }
+        let parse_coord = |value: &str, label: &str| {
+            value.parse::<i32>().map_err(|err| {
+                std::io::Error::new(
+                    std::io::ErrorKind::InvalidData,
+                    format!(
+                        "Invalid point at line {}: {} value '{}' is not an i32 ({})",
+                        idx + 1,
+                        label,
+                        value,
+                        err
+                    ),
+                )
+            })
+        };
+        res.push(Point2d {
+            x: parse_coord(parts[0], "x")?,
+            y: parse_coord(parts[1], "y")?,
+        });
+    }
+    Ok(res)
+}
+
 #[derive(Debug, PartialEq, Eq)]
 pub struct Point {
     pub x: i32,

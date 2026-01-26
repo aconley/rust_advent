@@ -1,0 +1,60 @@
+This is an extension of the problem in @prompts/day09_part2.txt, which you
+should solve by implementing the function part2 in the specified file.  The
+input will be in the same form -- a vector of 2D points.
+
+However, now the interpretation is slightly different.  Every 2D point is
+now connected to the points before and after it by a straight line.  This
+property wraps at the end of the list so that the first and last point are
+connected.  These lines should be purely vertical or horizontal, and it is
+an error if they are not.
+
+The list of points therefore will form a loop.  The new part of the problem
+is that only points on the edges or inside the loop are eligible to be
+included in a rectangle.  Your task is still to find the largest area rectangle
+you can form from two points selected from the list, but now the rectangle
+can't extend outside the loop.
+
+The example:
+
+7,1
+11,1
+11,7
+9,7
+9,5
+2,5
+2,3
+7,3
+
+now forms the following loop:
+
+..............
+.......#XXX#..
+.......X...X..
+..#XXXX#...X..
+..X........X..
+..#XXXXXX#.X..
+.........X.X..
+.........#X#..
+..............
+
+where # are the points and X are the edges of the loop.  This is counting
+from the upper left hand corner.
+
+So now the points (2,5) and (11,1) no longer form an eligible rectangle, since
+that rectangle includes points outside the loop.  However, the points
+(7,3) and (11,1) do form an eligible rectangle, with area 5 * 3 = 15.
+
+However, the largest eligible area is 24, which can be formed from (2,3)
+and (9,5).  As before, there may be multiple rectangles with the same area,
+we only care about the largest area, not exactly which points qualify.
+
+Note that the points chosen must be in the input list, they cannot be arbitrary
+points on the edges.
+
+Your task is to implement the function part2 to solve this problem.  You should
+prioritize clarity, but also consider efficiency since problems may be much
+larger than the example above.
+
+You should also add unit tests of the function.  They should go *well* beyond
+the example above, and cover various edge cases and additional scenarios that
+you should come up with.

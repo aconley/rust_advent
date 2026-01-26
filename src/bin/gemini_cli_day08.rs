@@ -84,28 +84,25 @@ fn part1(n: usize, m: usize, inputs: &[Point]) -> usize {
                 local_heap
             },
         )
-        .reduce(
-            BinaryHeap::new,
-            |mut h1, mut h2| {
-                if h1.is_empty() {
-                    return h2;
+        .reduce(BinaryHeap::new, |mut h1, mut h2| {
+            if h1.is_empty() {
+                return h2;
+            }
+            if h2.is_empty() {
+                return h1;
+            }
+            while let Some(item) = h2.pop() {
+                if h1.len() < n {
+                    h1.push(item);
+                } else if let Some(&max) = h1.peek()
+                    && item.0 < max.0
+                {
+                    h1.pop();
+                    h1.push(item);
                 }
-                if h2.is_empty() {
-                    return h1;
-                }
-                while let Some(item) = h2.pop() {
-                    if h1.len() < n {
-                        h1.push(item);
-                    } else if let Some(&max) = h1.peek()
-                        && item.0 < max.0
-                    {
-                        h1.pop();
-                        h1.push(item);
-                    }
-                }
-                h1
-            },
-        );
+            }
+            h1
+        });
 
     let mut dsu = Dsu::new(num_points);
     for (_, u, v) in final_heap {

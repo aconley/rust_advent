@@ -1,5 +1,5 @@
-use rust_advent::Point;
 use rayon::prelude::*;
+use rust_advent::Point;
 use std::collections::{BinaryHeap, HashMap};
 use std::sync::Mutex;
 
@@ -346,7 +346,11 @@ mod tests {
 
     #[test]
     fn test_negative_coordinates() {
-        let points = vec![point(-10, -20, -30), point(-11, -21, -31), point(100, 100, 100)];
+        let points = vec![
+            point(-10, -20, -30),
+            point(-11, -21, -31),
+            point(100, 100, 100),
+        ];
         // n=1: closest pair is the two negative points
         // Components: [2], [1]
         // m=1: largest = 2

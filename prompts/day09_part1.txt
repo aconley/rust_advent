@@ -1,0 +1,32 @@
+You will be given a list of integer pairs, which represent 2D grid points.
+Your job is to find the area of the largest rectangle you can make using
+any two pairs as opposite corners (top left and bottom right).
+
+For example, given the input
+
+7,1
+11,1
+11,7
+9,7
+9,5
+2,5
+2,3
+7,3
+
+there are many rectangles you could make.  For example, the rectangle
+formed by combining (2, 5) and (9, 7) has an area of 24 (8 wide by 3 tall),
+and that formed from (7, 1) and (11, 7) has an area of 5 * 7 = 35.
+
+However, the largest rectangle is formed from (2, 5) and (11, 1), which
+has an area of 10 * 5 = 50.  Note that there may be multiple rectangles of
+the same area, we only care what the largest area is, not which points went
+into forming it.
+
+Your task is to implement the function part1 to solve this problem.  You should
+prioritize clarity, but also consider efficiency since problems may be much
+larger than the example above.  You may wish to modify the signature of the
+function to handle failure.
+
+You should also add unit tests of the function.  They should go *well* beyond
+the example above, and cover various edge cases and additional scenarios that
+you should come up with.

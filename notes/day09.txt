@@ -1,0 +1,47 @@
+Part 1:
+  Gemini CLI:  Came up with a pretty fancy solution using convex hulls.
+    Tests were a bit beyond minimal, but not wonderful.  Asking it to critique
+    it's own code was helpful, and when asked for more tests it did oblige.
+  Codex: Came up with a simple N^2 approach.  Tried to make an O(N) one but
+    on implementation realized it was wrong.  I asked it about more sophisticated
+    approaches and it didn't apply convex hull, but did suggest some even more
+    complicated ones (including hull), but thought they were brittle.  Better
+    initial tests than Gemini.  Codex continues to not understand the _ prefix
+    convention for unused arguments.  It also struggles with it's own sandbox.
+  Claude: It saw the codex implementation, and had saved some information about
+    it that I couldn't clear.  Implemented the N^2 solution, when asked about
+    performance suggested the convex hull as possibly being appropriate, then
+    implemented it.  Left the old one around as clutter, had to be prompted to
+    clean it up.  Good tests.
+
+Part 2:
+  This was a more challenging problem, I'm not really sure how I would solve
+  it without some research.
+
+  Gemini CLI: Solved it.  Tests okay but not great, improved on prompting.
+    I don't understand the solutions here.  It got stuck in a loop on the first
+    pass and had to be restarted.
+  Codex: Similar to part1.  It's N^2, but still pretty complex.  Part 2 tests
+    rather anemic.
+  Claude: Initial solution too simple, but it realized it given the test example.
+    I still don't entirely understand the solution, but it's more clearly laid
+    out than the Gemini solution -- but it also got the wrong answer!
+    It hasn't been able to figure out why, but it's using a sampling algorithm
+    to decide if a rectangle is enclosed which might not be cutting mustard.
+    And, indeed, that was the problem, as confirmed by letting it look at
+    other solutions.  It's solution was quite slow once fixed, however, notably
+    slower than the Gemini one, and even the codex one.
+ 
+Summary:
+  Gemini was a bit eager to optimize, but came up with a good solution.
+    Tests not a strong point unless asked.
+  Codex: N^2, was willing to convex hull but didn't seem in favor.  Again
+    struggling with _s.
+  Claude: N^2, more willing and clear in presentation of alternatives. 
+    But then simply failed the second part.
+
+Summary: I thought claude was winning here until it borked the second part.
+  And it's fixed solution is quite a bit slower than the others.
+  I liked Gemini's solution better than the codex one, even though it was
+  complex, so it wins.  Codex was pretty basic, and is relatively easy to
+  understand though.
