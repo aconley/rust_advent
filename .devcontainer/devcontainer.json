@@ -24,7 +24,7 @@
     }
   },
 
-  "postCreateCommand": "rustc --version && cargo --version",
+  "postCreateCommand": "rustc --version && cargo --version && mkdir -p ~/.codex && echo 'sandbox_mode = \"danger-full-access\"' > ~/.codex/config.toml",
 
   "remoteUser": "vscode",
 
