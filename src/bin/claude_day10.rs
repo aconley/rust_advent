@@ -100,7 +100,11 @@ fn parse_endstate(line: &str) -> Result<(Vec<bool>, usize), ParseError> {
 }
 
 /// Parse steps from configuration string
-fn parse_steps(line: &str, end_bracket: usize, max_pos: usize) -> Result<Vec<Vec<usize>>, ParseError> {
+fn parse_steps(
+    line: &str,
+    end_bracket: usize,
+    max_pos: usize,
+) -> Result<Vec<Vec<usize>>, ParseError> {
     let steps_start = end_bracket + 1;
     let steps_end = line.find('{').unwrap_or(line.len());
     let steps_str = &line[steps_start..steps_end];
@@ -273,7 +277,13 @@ where
     // Try all possible values for this slot
     for value in 0..=remaining {
         partition[slot_idx] = value;
-        if generate_partitions_recursive(remaining - value, slot_idx + 1, num_slots, partition, callback) {
+        if generate_partitions_recursive(
+            remaining - value,
+            slot_idx + 1,
+            num_slots,
+            partition,
+            callback,
+        ) {
             return true; // Found solution, early exit
         }
     }
@@ -374,7 +384,7 @@ fn part1(input: &[String]) -> Result<u64, Box<dyn Error>> {
                     "No solution found for line {}: target state is unreachable with given steps",
                     line_num + 1
                 )
-                .into())
+                .into());
             }
         }
     }
@@ -391,13 +401,11 @@ fn part2(input: &[String]) -> Result<u64, Box<dyn Error>> {
 
         match find_minimum_steps_part2(&config)? {
             Some(steps) => total += steps as u64,
-            None => {
-                return Err(format!(
-                    "No solution found for line {}: target counts cannot be reached with given steps",
-                    line_num + 1
-                )
-                .into())
-            }
+            None => return Err(format!(
+                "No solution found for line {}: target counts cannot be reached with given steps",
+                line_num + 1
+            )
+            .into()),
         }
     }
 
@@ -521,7 +529,12 @@ mod tests {
     fn test_at_size_limit() {
         // Test that 32 positions is accepted (but use a simple case)
         let endstate = ".".repeat(31) + "#";
-        let targets = vec!["0"; 31].iter().chain(&["1"]).cloned().collect::<Vec<_>>().join(",");
+        let targets = vec!["0"; 31]
+            .iter()
+            .chain(&["1"])
+            .cloned()
+            .collect::<Vec<_>>()
+            .join(",");
         let input = vec![format!("[{}] (31) {{{}}}", endstate, targets)];
         assert_eq!(part1(&input).unwrap(), 1);
     }
@@ -680,6 +693,19 @@ mod tests {
         // Steps don't overlap - straightforward solution
         let input = vec!["[##] (0) (1) {5,7}".to_string()];
         assert_eq!(part2(&input).unwrap(), 12); // 5 + 7
+    }
+
+    // Too slow to enable.
+    #[test]
+    #[ignore]
+    fn test_part2_hard_case() {
+        let input = vec![
+            "[#..##.###.] (0,1,2,3,5,6,7,8) (0,1,2,4,6,7,8,9) (5,8,9) (3,4,6,7) (3,5,6) (1,
+4,8,9) (2,3,7,8,9) (0,1,2,6,7,8) (0,6,9) (0,5,7,8,9) (0,2,3,4,6,7,8,9) (1,4,6,9) (1,2,5,6) {225,56,
+230,208,204,28,256,231,235,246}"
+                .to_string(),
+        ];
+        assert_eq!(part2(&input).unwrap(), 128);
     }
 
     // ===== Error Handling Tests =====

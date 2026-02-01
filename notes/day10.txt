@@ -9,13 +9,21 @@ Part 1:
     times was not helpful.  It considered more complex solutions
     to (linear algebra in GF(2)), but otherwise could not take advantage of it.
     Code somewhat unclear, but cleaned up when asked to self review.  Chose a 
-    full error enum to handle :waserrors.
+    full error enum to handle errors.  Tests a bit ugly in that they unwrap
+    instead of compare to Some, and tests against the full part2 function
+    instead of the more readable inner functions.
+
+    I went back and asked claude why things were so slow, and it read
+    these notes.  Ugh.
   * Gemini: used the GL(2) solution with a branch for smaller problems.
     As per usual, tests anemic.  Had to be prodded multiple times -- it wasn't
     covering both paths.  It did not notice or take advantage of the fact
     that including a step multiple times can never be beneficial, but when
     informed it was able to take advantage of that fact, which claude
     was not.
+  * Codex: solved using a 'meet in the middle' approach.  Tests fairly anemic.
+    When asked for improvements, considered some GF2 partial solutions.  It
+    did avoid enquing the same state multiple times.
 
 Part 2:
   * Claude: Solution is very slow, too slow to complete.
@@ -34,6 +42,38 @@ Part 2:
     This is burning a ton of tokens, and not succeeding.
 
     This is a Diophantine problem!
+  * Codex: Similar branch and bound approach, but integer based.  It does
+    note the problem is NP hard.  There is some mention of NP-hardness, or
+    of using an external ILP solver.  Similar to the others, however, it
+    did not succeed.  When I gave it hints below it fought very hard against
+    using them.  It correctly noted they still had bad worst case, but also
+    was very disinclined to try them.  So it never actually came up with a
+    solution that worked on the real inputs until I showed it the Gemini
+    solution and asked what was different.
+
+    Tough case -- as noted below this problem is probably infeasible in general,
+    but codex did poorly here by fighting so hard to not even try.
+
+Summary: this was an very challenging one for all agents.  None of them
+  were able to find a good solution unaided.  However, there were some differences
+  in how they used the hints:
+    * Claude cheated, despite me telling it not to read the file, so I can'take
+      evaluate how it would've used the hint.  It was also the farthest away
+      from anything practical before the hint -- I had discussed it being too
+      slow before that step without much success.  Better tests, although
+      rather awkward.  It had trouble using suggested improvements in part1.
+    * Gemini did solve it with hints, but as usual the tests were quite weak.
+      It's solution to part1 was slightly better than Claude's as well with
+      light hints.
+    * Codex fought really really hard to not use the hints for part2, and had 
+      to be shown another solution to be convinced.  It's solution to part1 was
+      probably the best, in as it needed lest hinting to take advantage of
+      not using steps twice.  It's tests were just as bad as Gemini's -- utterly
+      ignoring my instructions to add more test cases.
+
+I guess Gemini wins by default, as the only one that could find a solution
+(with considerable help).  I didn't quite get a chance to check Claude with
+hints because it flat out cheated.
 
 For gemini I added the following, which lead it to solve it:
  Consider the following:  say we are solving the problem
@@ -62,3 +102,11 @@ solveable if you were to only consider {3}, {0, 1}, since the remaining problem
 is different.
                                                                                                                                        │
 Can you take advantage of this, possibly involving memoizing previous solutions?    
+
+For codex I did something similar but more interactively.
+
+Note the solution still has horrible worst case performance, because the
+step of generating all parity 'seeds' can still have 2^steps complexity when
+the 'nullspace' of the GF(2) kernel is large.  I have disabled example tests
+-- disabled because they will run for a long time.  There probably is no
+general solution here that isn't exponential -- the general problem is NP-hard.

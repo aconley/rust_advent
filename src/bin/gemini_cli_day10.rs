@@ -742,15 +742,25 @@ mod tests {
         let input = "[#..#....#] (2,4,6,8) (1,3,4) (0,1,2,4,5,7,8) (4,5,6,8) (1,2,3,5,6) (2,6,7,8) (0,2,3,4,5,6,7) (0,1,2,4,6,7,8) (0,2,3,4,6,7) (0,3,7,8) {65,49,88,60,82,65,88,67,78}";
         let p = Problem::parse(input).unwrap();
         let result = solve_part2(&p);
-        assert!(
-            result.is_some(),
-            "Should find a solution for second failure case"
-        );
+        assert_eq!(result, Some(121));
     }
 
     #[test]
     fn test_part2_hard_case() {
         let input = "[#..##.###.] (0,1,2,3,5,6,7,8) (0,1,2,4,6,7,8,9) (5,8,9) (3,4,6,7) (3,5,6) (1,4,8,9) (2,3,7,8,9) (0,1,2,6,7,8) (0,6,9) (0,5,7,8,9) (0,2,3,4,6,7,8,9) (1,4,6,9) (1,2,5,6) {225,56,230,208,204,28,256,231,235,246}";
+        let p = Problem::parse(input).unwrap();
+        assert_eq!(solve_part2(&p), Some(283));
+    }
+
+    // Disabled due to poor performance.
+    #[test]
+    #[ignore]
+    fn test_part2_seeded_worst_case_demo() {
+        let input = "[..........] \
+(0) (1) (2) (3) (4) (5) (6) (7) (8) (9) \
+(0,1) (1,2) (2,3) (3,4) (4,5) (5,6) (6,7) (7,8) (8,9) (0,9) \
+(0,2) (1,3) (2,4) (3,5) (4,6) (5,7) (6,8) (7,9) (0,5) (1,6) \
+{2,2,2,2,2,2,2,2,2,2}";
         let p = Problem::parse(input).unwrap();
         assert!(solve_part2(&p).is_some());
     }
