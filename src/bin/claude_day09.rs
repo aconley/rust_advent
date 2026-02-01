@@ -211,7 +211,13 @@ fn rectangle_in_polygon(p1: Point2d, p2: Point2d, polygon: &[Point2d]) -> bool {
     // Check center point for concave polygons
     let center_x = (min_x + max_x) / 2;
     let center_y = (min_y + max_y) / 2;
-    if !point_in_or_on_polygon(Point2d { x: center_x, y: center_y }, polygon) {
+    if !point_in_or_on_polygon(
+        Point2d {
+            x: center_x,
+            y: center_y,
+        },
+        polygon,
+    ) {
         return false;
     }
 
@@ -404,13 +410,7 @@ mod tests {
 
     #[test]
     fn test_large_values() {
-        let points = vec![
-            Point2d { x: 0, y: 0 },
-            Point2d {
-                x: 10000,
-                y: 10000,
-            },
-        ];
+        let points = vec![Point2d { x: 0, y: 0 }, Point2d { x: 10000, y: 10000 }];
         // width = 10001, height = 10001, area = 100020001
         assert_eq!(part1(&points), 100020001);
     }
@@ -641,7 +641,8 @@ mod tests {
         // Add interior points (these should NOT affect the result)
         for x in -50..50 {
             for y in -50..50 {
-                if x * x + y * y < 2500 { // Inside circle of radius 50
+                if x * x + y * y < 2500 {
+                    // Inside circle of radius 50
                     points.push(Point2d { x, y });
                 }
             }
@@ -661,8 +662,10 @@ mod tests {
         println!("  Hull size: {}", hull_size);
         println!("  Comparisons without optimization: {}", naive_comparisons);
         println!("  Comparisons with optimization: {}", optimized_comparisons);
-        println!("  Reduction: {:.1}x fewer comparisons\n",
-                 naive_comparisons as f64 / optimized_comparisons as f64);
+        println!(
+            "  Reduction: {:.1}x fewer comparisons\n",
+            naive_comparisons as f64 / optimized_comparisons as f64
+        );
     }
 
     #[test]

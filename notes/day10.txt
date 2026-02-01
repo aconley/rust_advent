@@ -1,13 +1,64 @@
+Part 2 is the hard problem for this years code.  Really hard!
+I burned a ton of tokens on this -- so make sure to get the agent
+to explain what it's doing before implementing rather than waste
+time on bad solutions (Claude: BFS, Gemini: Diophantine equations).
+
 Part 1:
   * Claude: implemented a correct solution, with decent tests.
     I had to point out to it that taking the same state multiple
     times was not helpful.  It considered more complex solutions
-    to take advantage of this (linear algebra in GF(2)), but otherwise
-    could not take advantage of it.  Code somewhat unclear, but
-    cleaned up when asked to self review.
+    to (linear algebra in GF(2)), but otherwise could not take advantage of it.
+    Code somewhat unclear, but cleaned up when asked to self review.  Chose a 
+    full error enum to handle :waserrors.
+  * Gemini: used the GL(2) solution with a branch for smaller problems.
+    As per usual, tests anemic.  Had to be prodded multiple times -- it wasn't
+    covering both paths.  It did not notice or take advantage of the fact
+    that including a step multiple times can never be beneficial, but when
+    informed it was able to take advantage of that fact, which claude
+    was not.
 
 Part 2:
   * Claude: Solution is very slow, too slow to complete.
     When told it was too slow, it changed approaches to
     compute in order of the number of steps, but it's
     still extremely slow.
+  * Gemini: again used linear algebra for the solution.  Tests again anemic,
+    it got caught in a loop when asked to improve.  Test names were also
+    poor -- not clear if they were for part1 or part2.  It's approach failed
+    to find a solution for at least one problem, which I then asked it to
+    investigate, so it decided to switch to integer over floating point
+    elimination, which turned out to be a pretty quick change.  It kept 
+    leaving the file in a weird formatting state with lots of extra blank lines,
+    and needed poking to add comments.  Then it failed for a different problem.
+
+    This is burning a ton of tokens, and not succeeding.
+
+    This is a Diophantine problem!
+
+For gemini I added the following, which lead it to solve it:
+ Consider the following:  say we are solving the problem
+  (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
+ We know that (using the notation of part1), the pattern this would produce is 
+ '#.##' -- that is, the sum is odd at positions 0,2,3 and even at position 1.  
+ Moreover, executing any step an even number of times on top of that would not 
+ change the pattern -- which is the even/oddness of each position.  Also recall 
+ there is no benefit to selecting any step twice when solving the '#.##' problem, 
+ since that is effectively a no-op for the even/odness.
+
+If we could generate all ways to produce this pattern we know that the solution 
+would be one of those patterns plus an even number of executions of some 
+combination of the steps.  That means that after executing one of the sequences
+that produced '#.##' we would have a residual problem where the counts we need 
+to generate are even in all positions.  But that means we can recurse by dividing   │
+the remainder by some multiple of 2, giving us a smaller problem instance to solve.                                                  │
+                                                                                                                                       │
+For example, one way to achieve '#.##' is to execute {3}, {0, 1}, which gives 
+us the residual problem {2,4,4,6} -- which can then be solved by solving 
+{1,2,2,3} and then applying the solution twice.  However, you would also need
+to consider starting with {1, 3}, {2}, {0, 2} as well, which also produces 
+'#.##' but leaves a different residual {2, 4, 2, 6}, which can be solved
+by applying the solution for {1,2,1,3} twice.  In fact, the problem may not be                                              │
+solveable if you were to only consider {3}, {0, 1}, since the remaining problem
+is different.
+                                                                                                                                       │
+Can you take advantage of this, possibly involving memoizing previous solutions?    
