@@ -25,7 +25,8 @@ So, for example, if the system is in state ['.', '#', '.', '#']
 then selecting the step (0,1) will change the state to be ['#', '.', '.', '#'].
 
 The goal is to find the minimum number of steps in order to go from the initial,
-all deactivated, position to the desired endstate.
+all deactivated, position to the desired endstate.  Steps must be taken
+an integral number of times.
 
 For the above example, possible sequences of steps that achieve the end state
 are:
@@ -55,7 +56,7 @@ number of steps to achieve the desired endstate, and then sum those values
 for all individual inputs.  So, for example, if the 3 examples were the input,
 the returned value should be 2 + 3 + 2 = 7.
 
-To accomplish this, you should complete the implementation of the part1
+To accomplish this, you shoul:wasd complete the implementation of the part1
 function in the specified file.  You must:
 
 - Most critially, solve the problem correctly.
@@ -63,9 +64,18 @@ function in the specified file.  You must:
   to include additional edge cases and in general improve the coverage.
   If you do not do this, you have failed.
 - Modify the signature of the function in order to handle errors.
+  You should also handle the case where a solution cannot be found.
 
 Beyond those goals, you should prioritize clarity, but you should also
 consider efficiency when it does not result in radically more complex code;
 the actual configurations may be much larger and more difficult than the above
-examples.
+examples.  However, it is safe to assume there are 32 or fewer positions;
+you should return an error if that is not the case.
 
+We generally expect there to be more steps than positions, although
+not dramatically so.  It is safe to expect there are fewer than 64, and
+return an error if not.
+
+Note that you are not required to run main, as that will fail due to missing 
+inputs.  Looking at other files in the repository is not useful,  except 
+possibly lib.rs.

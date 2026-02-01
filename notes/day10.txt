@@ -1,0 +1,13 @@
+Part 1:
+  * Claude: implemented a correct solution, with decent tests.
+    I had to point out to it that taking the same state multiple
+    times was not helpful.  It considered more complex solutions
+    to take advantage of this (linear algebra in GF(2)), but otherwise
+    could not take advantage of it.  Code somewhat unclear, but
+    cleaned up when asked to self review.
+
+Part 2:
+  * Claude: Solution is very slow, too slow to complete.
+    When told it was too slow, it changed approaches to
+    compute in order of the number of steps, but it's
+    still extremely slow.

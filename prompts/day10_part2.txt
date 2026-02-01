@@ -1,0 +1,58 @@
+This is an extension of the problem in @prompts/day10_part1.txt.
+
+However, now the relevant target is the second set of targets
+at the end of each line in the {}s rather than the []s.  Now
+the goal is for the sum of each steps to add up to the values
+in the {}s at each position.
+
+The initial state is all 0s for the number of positions,
+and selecting a step once will increment the values by one
+at each matching position.
+
+Considering the same example as before:
+
+[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
+
+now the goal is to combine the steps [(3),(1,3),(2),(2,3),(0,2),(0,1)]
+an integral number of times so that they add up to {3, 5, 4, 7},
+and again find the minimum number of steps for each problem.
+
+For example, selecting (3) and (1,3) will result in a state
+of {0, 1, 0, 2} because position 3 is incremented twice,
+and position 1 once.
+
+For the above problem, the minimum number of steps to match is 10:
+the goal state is: 
+[(3),(1,3),(1,3),(1,3),(2,3),(2,3),(2,3),(0,2),(0,1),(0,1)]
+
+Again, there may be multiple such sequences, we only care about
+the minimum number of steps.
+
+* For [...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}
+  the answer is 12: (0,2,3,4) twice, (2,3) five times, and (0,1,2) once.
+* For [.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}
+  the answer is 11: (0,1,2,3,4) five times, (0,1,2,4,5) five times, 
+  and (1,2) once.
+
+Again, the task is to return the sum of these values; if these
+three examples were the input, you would return 10 + 12 + 11 = 33.
+
+You should solve this problem by implementing the function part2
+in the specified file.  Otherwise the instructions are similar
+to part1:
+
+* Prioritize clarity, with a secondary goal of performance.
+* You must include unit tests that go well beyond the above
+  examples, or you will have failed the task.
+* The signature of the function should be modified to handle
+  errors.
+* The number of positions should be <= 32 and the number
+  of steps <= 64.  If there are more, return an error.
+* Ideally, you should use the same input parsing routine
+  as before rather than create a new one, although you will
+  likely need to modify it (and what it returns) to reflect
+  the new target state (in the {}s).
+* You should handle the case when a solution cannot be found
+  gracefully.
+
+
