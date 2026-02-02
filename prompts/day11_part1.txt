@@ -1,0 +1,48 @@
+This is a problem where you will count the number of paths in a graph
+from a one location to another.
+
+The input is a vector of lines of the from
+
+source: targ1 targ2
+
+where `source` is a node in a graph and `targ1` and `targ2` are other
+nodes it is connected to with a directed edge.   Your task is, given
+a graph, a start vertes, and an end vertes, to count the number of distinct 
+paths from start to end.
+
+For example, given the graph:
+
+aaa: you hhh
+you: bbb ccc
+bbb: ddd eee
+ccc: ddd eee fff
+ddd: ggg
+eee: out
+fff: out
+ggg: out
+hhh: ccc fff iii
+iii: out
+
+if the start vertex is `you` and the target is `out`, the distinct paths are:
+
+- you to bbb, then from bbb to ddd, then from ddd to ggg, then from ggg to out.
+- you to bbb, then to eee, then to out.
+- you to ccc, then ddd, then ggg, then out.
+- you to ccc, then eee, then out.
+- you to ccc, then fff, then out.
+
+so there are 5 paths.
+
+Your task is to implement the function part1 in the specified file to compute
+this value.  Your implementation should focus on clarity, then on performance
+(the actual problems may be substantially larger than the provided example).
+In addition:
+
+* You *must* write unit tests that should go well beyond the provided example
+  to cover interesting edge cases and larger and smaller examples.
+* You may modify the signature of the function if desired to make it more
+  ergonomic.
+
+Note that you are not required to run main, as that will fail due to missing 
+inputs.  Looking at other files in the repository is not useful,  except 
+possibly lib.rs.
