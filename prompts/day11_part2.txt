@@ -1,0 +1,37 @@
+This is an extension of the problem in @prompts/day11_part1.txt,
+which you should solve by implementing the function part2.
+
+The input is in the same format, and you will also still
+be given the start and end vertices.  The difference is that you
+will now also be given a Vector<String> (or, really, a &[AsRef<str>])
+of additional vertcies that must be visited along the path, in any
+order.  Your task is now to return the number of paths from the
+start to target vertex that pass through all of the provided
+`required_vertices`.
+
+For example, if the input graph is:
+
+svr: aaa bbb
+aaa: fft
+fft: ccc
+bbb: tty
+tty: ccc
+ccc: ddd eee
+ddd: hub
+hub: fff
+eee: dac
+dac: fff
+fff: ggg hhh
+ggg: out
+hhh: out
+
+and if the start is `svr`, the end `out`, and the required vertices
+are `fft` and `dac`, then there are 8 paths from `svr` to `out`, but
+only two paths that meet all the conditions:
+
+- svr,aaa,fft,ccc,eee,dac,fff,ggg,out
+- svr,aaa,fft,ccc,eee,dac,fff,hhh,out
+
+therefore the answer is 2.
+
+Otherwise the instructions are the same.

@@ -1,0 +1,16 @@
+Part 1:
+  Claude: Insisted on reading other files in the directory
+    despite instructions not to, for the purposes of understanding
+    unit tests.  Then it tried to read the inputs.  Didn't use a
+    structure, didn't check parsing errors.  I asked it to add error
+    handling for parsing.  I then asked it to review it's own code,
+    it made some minor improvements.  It still had unecessary arguments
+    to the function (visting and memo cache) that could've been internal --
+    when asked it made a wrapper to hide them (so they could be shared
+    across calls).  I asked about explicit stack management, it argued
+    it wasn't worth it.  Tests decent.
+
+Part 2:
+  Claude: Straightforward implementation, many many arguments to
+    the function (8!).  When prompted switched to a struct/impl pattern.
+    Tests decent.
