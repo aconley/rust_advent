@@ -1,0 +1,43 @@
+Part 1:
+  * Codex: implemented solution quickly.  Error handling poor (panics and unwraps),
+    testing only very slightly beyond examples.  Solution pretty slow, about 50 sec
+    (debug) or 7 sec (release).
+
+    It suggested a few improvements for pruning on self-review which had little effect.  
+    In places the rust wasn't particularly idiomatic -- indexing to build vectors, etc.
+    It's basic approach was to try placing the shapes in each remaining position,
+    no wonder it was rather slow.  That is: I don't see much in the way of heuristics
+    to make better choices.  Also, it didn't seem to consider that some pieces are the
+    same when rotated or flipped.  
+
+    When asked to improve the errors it went full error enum -- but then promptly swallowed
+    it with no message or handling, which is pretty useless.  When asked, wrote a function
+    to print the error instead of implementing a print trait.  So: oddly un-idiomatic rust code,
+    more so than previous problems.
+  * Gemini: similar approach, seemed to make more use of heuristics for chosing
+    the next move.  As a result, < 1 sec runtime in debug and 100ms in release.
+
+    Rust code also a bit non-idiomatic, but better than codex.  Test coverage
+    about the same or slightly better than codex.
+ 
+    Not much error handling, when asked to add some introduced an Error string type
+    instead of a full enum, and handled it correctly.
+  * Claude: same basic approach, included decent tests -- the best by far.  Initially 
+    didn't dedup shapes, but decided to add that at some point.  Performance intermediate:
+    3-4 seconds on debug mode, < 1 sec on release, but definitely substantially slower than
+    Gemini.  Asked to improve itself, it notice that it hadn't actually implemented piece
+    ordering heuristics, and removed some double lookups and excess cloning, which cut
+    execution time in half to 230 ms.
+
+    Again some non-idiomatic rust looping!  And again, no good error handling.
+
+Summary:
+    * Claude the best at following directions, by far the best test coverage.  Decent performance.
+    * Gemini weak test coverage, better performance by 2x than Claude.
+    * Codex also weak test coverage, terrible performance and didn't find good ways to improve it.
+      Well behind the pareto frontier.
+
+    There was some strangely non-idiomatic rust from all agents here, with Codex being notably
+    worse than the others.  It isn't clear what about this problem triggered that behavior.
+    Also, none of them handled errors very well, despite being invited to.
+   

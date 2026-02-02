@@ -112,7 +112,9 @@ For the final region, we want to fit 1 piece of type 0, 1 of type 2, 3 of type
 
 Your task is to count the number of regions for which the specified pieces can
 be placed.  In the above example, the answer you would return is 2, since 2 of
-the three regions could be satisfied.
+the three regions could be satisfied.  We don't care if there are multiple
+ways to fit the shapes into the region, only whether or not there is at least
+one way.
 
 Your task is to implement the function part1 in the specified file to compute
 this value.  Your implementation should focus on clarity, then on performance
@@ -126,6 +128,10 @@ In addition:
   to promote reuse and testability.
 * It is up to you how to represent the shapes and regions, but prefer structs
   with names over more generic arguments.
+* Feel free to modify the signature of the functions, especially to improve
+  error handling.
+* If you require clarification on some aspect of the problem or design, please
+  ask.
 
 Note that you are not required to run main, as that will fail due to missing 
 inputs.  Looking at other files in the repository is not useful,  except 
