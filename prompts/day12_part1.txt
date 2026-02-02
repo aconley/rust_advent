@@ -1,0 +1,133 @@
+This is a puzzle attempting to fit 2D shapes into a 2D rectangular region.
+
+The input consists of 
+
+1. A number of shapes.  Each shape starts with a line consisting of a number
+   followed by a colon, where the number identifies the shape.  It then consists
+   of a number of lines that give the positions that the shape occupies, where
+   an occupied point is denoted with a '#' and a unoccupied point by a '.'.
+   Each shape is terminated by an empty newline.
+
+2. A series of regions.  Each region is a single line starting with two numbers
+   separated by a x followed by a colon, where the numbers give the x and y 
+   dimensions of the region;  each region is rectangular.  The dimensions are
+   followed by a whitespace separated list of numbers, where each number gives
+   the number of shapes of that type that we want to attempt to fit into the
+   grid.
+
+This, for example, is a shape:
+
+0:
+###
+##.
+##.
+
+This is the shape 0, which is almost a 3x3 block except that the 2 lower right
+corner positions are missing.
+
+An example region is:
+
+4x4: 0 0 0 0 2 0
+
+which is a 4 by 4 region which we want to try to fit 2 shapes of type 4 into.
+
+Shapes may be rotated and flipped, but may not overlap.  It is not necessary
+to fill every position on the grid -- spots may be left empty.  The overall
+goal is to count the number of regions into which all of the required pieces
+for that region may be placed.
+
+Consider the previous example, if shape type 4 is:
+
+4:
+###
+#..
+###
+
+Can we fit 2 pieces of this shape into a grid of size 4x4? (this is the example
+region given previously)  The answer is yes:
+
+AAA.
+ABAB
+ABAB
+.BBB
+
+where 'A' denotes one piece, 'B' the other, and the '.' are grid positions not
+filled by a piece.  Note that one of the pieces had to be rotated (or flipped).
+
+Consider an expanded input:
+
+0:
+###
+##.
+##.
+
+1:
+###
+##.
+.##
+
+2:
+.##
+###
+##.
+
+3:
+##.
+###
+##.
+
+4:
+###
+#..
+###
+
+5:
+###
+.#.
+###
+
+4x4: 0 0 0 0 2 0
+12x5: 1 0 1 0 2 2
+12x5: 1 0 1 0 3 2
+
+This defines 6 shapes (0, 1, 2, 3, 4, 5) and three regions.  The first region
+is the example given earlier, which we already know we can fit two pieces of
+type 4 into.
+
+The second problem asks us to place 1 piece of type 0, 1 of type 2, 2 of
+type 4, and 2 of type 5 into a 12 by 5 region.  Is this possible?  Yes, here
+is one solution:
+
+....AAAFFE.E
+.BBBAAFFFEEE
+DDDBAAFFCECE
+DBBB....CCC.
+DDD.....C.C.
+
+Where 'A' through 'F' denote pieces filled by the shapes, and '.' are left 
+unfilled.  Again, the pieces have been rotated and flipped.
+
+For the final region, we want to fit 1 piece of type 0, 1 of type 2, 3 of type
+4, and 2 of type 5 into a 12 by 5 grid.  This turns out to not be possible.
+
+Your task is to count the number of regions for which the specified pieces can
+be placed.  In the above example, the answer you would return is 2, since 2 of
+the three regions could be satisfied.
+
+Your task is to implement the function part1 in the specified file to compute
+this value.  Your implementation should focus on clarity, then on performance
+(the actual problems may be substantially larger than the provided example).
+In addition:
+
+* You *must* write unit tests that should go well beyond the provided example
+  to cover interesting edge cases and larger and smaller examples.  If you
+  do not, you have failed at the task.
+* You should structure your solution into a reasonable number of subfunctions
+  to promote reuse and testability.
+* It is up to you how to represent the shapes and regions, but prefer structs
+  with names over more generic arguments.
+
+Note that you are not required to run main, as that will fail due to missing 
+inputs.  Looking at other files in the repository is not useful,  except 
+possibly lib.rs.  The largest positions will likely be around 50 by 50
+and require at most 50-60 of each type of shape.
